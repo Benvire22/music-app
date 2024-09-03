@@ -27,7 +27,7 @@ artistsRouter.post('/', imageUpload.single('photo'), async (req, res, next) => {
     const artist = new Artist(artistMutation);
     await artist.save();
 
-    res.send(artist);
+    return res.send(artist);
   } catch (e) {
     if (e instanceof mongoose.Error.ValidationError) {
       return res.status(400).send(e);

@@ -8,21 +8,18 @@ const albumsRouter = express.Router();
 
 albumsRouter.get('/', async (req, res, next) => {
   try {
-    const artist = req.query.artist as { artist: string };
+    const { artist } = req.query;
     const albums = await Album.find(artist ? { artist: artist } : {});
 
     return res.send(albums);
   } catch (e) {
-    next(e);
+    return next(e);
   }
 });
 
 albumsRouter.get('/:id', async (req, res, next) => {
   try {
-    const album = await Album.findById(req.params.id).populate(
-      'artist',
-      '_id name photo',
-    );
+    const album = await Album.findById(req.params.id).populate('artist', '_id name description');
 
     if (album === null) {
       res.status(404).send({ error: 'Album not found' });
@@ -30,7 +27,7 @@ albumsRouter.get('/:id', async (req, res, next) => {
 
     return res.send(album);
   } catch (e) {
-    next(e);
+    return next(e);
   }
 });
 

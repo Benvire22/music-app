@@ -7,7 +7,7 @@ const tracksRouter = express.Router();
 
 tracksRouter.get('/', async (req, res, next) => {
   try {
-    const album = req.query.album as { album: string };
+    const { album } = req.query;
     const tracks = await Track.find(album ? { album: album } : {});
 
     return res.send(tracks);
@@ -31,7 +31,7 @@ tracksRouter.post('/', async (req, res, next) => {
     const track = new Track(trackMutation);
     await track.save();
 
-    res.send(track);
+    return res.send(track);
   } catch (e) {
     if (e instanceof mongoose.Error.ValidationError) {
       return res.status(400).send(e);
