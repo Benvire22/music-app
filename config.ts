@@ -18,6 +18,7 @@ const config = {
   rootPath,
   corsOptions,
   publicPath: path.join(rootPath, 'public'),
+  database: 'mongodb://localhost/music-app',
 };
 
 export default config;

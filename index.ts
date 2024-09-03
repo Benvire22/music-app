@@ -17,7 +17,7 @@ app.use('/albums', albumsRouter);
 app.use('/tracks', tracksRouter);
 
 const run = async () => {
-  await mongoose.connect('mongodb://localhost/music-app');
+  await mongoose.connect(config.database);
 
   app.listen(port, () => {
     console.log(`Server started on port ${port}`);
