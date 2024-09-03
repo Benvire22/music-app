@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
 
 const artistsRouter = express.Router();
 
-artistsRouter.get('/', async (req, res, next) => {
+artistsRouter.get('/', async (_, res, next) => {
   try {
     const artists = await Artist.find();
     return res.send(artists);
