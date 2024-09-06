@@ -11,13 +11,10 @@ const run = async () => {
   const db = mongoose.connection;
 
   try {
-    await db.dropCollection('artists');
-    await db.dropCollection('albums');
-    await db.dropCollection('tracks');
-    await db.dropCollection('users');
-    await db.dropCollection('track_history');
+    await db.dropDatabase();
+    console.log('Database dropped successfully');
   } catch (e) {
-    console.log('Skipping drop...');
+    console.log('Error dropping database:', e);
   }
 
   const [ivanArtist, sergeyArtist] = await Artist.create({
@@ -87,6 +84,7 @@ const run = async () => {
   });
 
   await db.close();
+  await mongoose.disconnect();
 };
 
 run().catch(console.error);
