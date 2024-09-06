@@ -3,6 +3,8 @@ import config from './config';
 import Artist from './models/Artist';
 import Album from './models/Album';
 import Track from './models/Track';
+import User from './models/User';
+import { randomUUID } from 'node:crypto';
 
 const run = async () => {
   await mongoose.connect(config.database);
@@ -12,6 +14,8 @@ const run = async () => {
     await db.dropCollection('artists');
     await db.dropCollection('albums');
     await db.dropCollection('tracks');
+    await db.dropCollection('users');
+    await db.dropCollection('track_history');
   } catch (error) {
     console.log('Skipping drop...')
   }
@@ -74,6 +78,20 @@ const run = async () => {
     name: 'Final gate',
     album: darknessAlbum,
     length: '2:50',
+  });
+
+  await User.create({
+    username: 'John',
+    password: '123',
+    token: randomUUID(),
+  },{
+    username: 'Jane',
+    password: '1234',
+    token: randomUUID(),
+  },{
+    username: 'Dana',
+    password: '123',
+    token: randomUUID(),
   });
 
   await db.close();

@@ -33,3 +33,9 @@ export interface UserField {
   password: string;
   token: string;
 }
+
+export interface TrackHistoryMutation {
+  user: mongoose.Types.ObjectId;
+  track: mongoose.Types.ObjectId | string;
+  datetime: Date;
+}

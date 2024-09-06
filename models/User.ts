@@ -19,7 +19,7 @@ const UserSchema = new Schema<UserField>({
   token: {
     type: String,
     required: true,
-  }
+  },
 });
 
 UserSchema.pre('save', async function (next) {
