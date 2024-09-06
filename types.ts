@@ -27,3 +27,9 @@ export interface Track {
 }
 
 export type TrackMutation = Omit<Track, '_id'>;
+
+export interface UserField {
+  username: string;
+  password: string;
+  token: string;
+}
