@@ -40,8 +40,8 @@ usersRouter.post('/sessions', async (req, res, next) => {
     }
 
     user.token = randomUUID();
-    await user.save();
 
+    await user.save();
     return res.send(user);
   } catch (e) {
     if (e instanceof mongoose.Error.ValidationError) {

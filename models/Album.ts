@@ -1,11 +1,12 @@
 import mongoose, { Types } from 'mongoose';
 import Artist from './Artist';
+import { AlbumMutation } from '../types';
 
 const Schema = mongoose.Schema;
 
-const AlbumSchema = new Schema({
+const AlbumSchema = new Schema<AlbumMutation>({
   artist: {
-    type: Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'Artist',
     required: true,
     validate: {

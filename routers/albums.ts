@@ -1,22 +1,17 @@
 import express from 'express';
+import mongoose from 'mongoose';
 import Album from '../models/Album';
 import { imageUpload } from '../multer';
-import { AlbumMutation } from '../types';
-import mongoose from 'mongoose';
 
 const albumsRouter = express.Router();
 
 albumsRouter.get('/', async (req, res, next) => {
   try {
     const { artist } = req.query;
-    const albums = await Album.find(artist ? { artist: artist } : {});
+    const albums = await Album.find(artist ? { artist } : {});
 
     return res.send(albums);
   } catch (e) {
-    if (e instanceof mongoose.Error.ValidationError) {
-      return res.status(400).send(e);
-    }
-
     return next(e);
   }
 });
@@ -37,16 +32,14 @@ albumsRouter.get('/:id', async (req, res, next) => {
 
 albumsRouter.post('/', imageUpload.single('image'), async (req, res, next) => {
   try {
-    const albumMutation: AlbumMutation = {
+    const album = new Album({
       name: req.body.name,
       artist: req.body.artist,
       releaseDate: req.body.releaseDate,
       image: req.file ? req.file.filename : null,
-    };
+    });
 
-    const album = new Album(albumMutation);
     await album.save();
-
     return res.send(album);
   } catch (e) {
     if (e instanceof mongoose.Error.ValidationError) {
