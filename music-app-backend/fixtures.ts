@@ -17,7 +17,7 @@ const run = async () => {
 
   const [ivanArtist, sergeyArtist] = await Artist.create({
       name: 'Ivan',
-      photo: 'fixtures/ivan.png',
+      photo: 'fixtures/ivan.jpg',
       description: 'Hello everyone',
     }, {
       name: 'Sergey',
@@ -25,14 +25,14 @@ const run = async () => {
       description: 'Hello everyone',
     }, {
       name: 'John',
-      photo: 'fixtures/john.png',
+      photo: 'fixtures/john.jpg',
   });
 
   const [summerAlbum, springAlbum, darknessAlbum] = await Album.create({
       name: 'Summer',
       artist: ivanArtist,
       releaseDate: 2024,
-      image: 'fixtures/summer.jpg',
+      image: 'fixtures/summer.webp',
     }, {
       name: 'Spring',
       artist: ivanArtist,

@@ -43,7 +43,7 @@ const Artists = () => {
             <Typography variant="h4">Artists</Typography>
           </Grid>
         </Grid>
-        <Grid container spacing={1}>
+        <Grid container spacing={5} justifyContent="center" >
           {isFetching && <CircularProgress />}
           {content}
         </Grid>

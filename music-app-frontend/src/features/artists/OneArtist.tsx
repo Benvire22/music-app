@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Alert, Button, CircularProgress } from '@mui/material';
+import { Alert, Button, CircularProgress, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
@@ -29,7 +29,7 @@ const OneArtist: React.FC = () => {
 
   let content: React.ReactNode = (
     <Alert severity="info" sx={{ width: '100%' }}>
-      There are no Artists here!
+      There are no tracks here!
     </Alert>
   );
 
@@ -48,13 +48,18 @@ const OneArtist: React.FC = () => {
   }
 
   return artist && (
-    <Grid container direction="column" spacing={2}>
+    <Grid container direction="column" spacing={3}>
       <Grid>
+        <Grid container justifyContent="space-between" marginBottom="50px" alignItems="center">
+          <Grid>
+            <Typography variant="h4">{artist.name}</Typography>
+          </Grid>
+        </Grid>
         <Button variant="text" startIcon={<ArrowBackIcon/>} component={Link} to="/">
           Back to all Artists
         </Button>
       </Grid>
-      {content}
+      <Grid container>{content}</Grid>
     </Grid>
   );
 };

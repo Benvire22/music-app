@@ -6,7 +6,7 @@ import axiosApi from "../../axiosApi";
 export const fetchAlbums = createAsyncThunk<Album[], string>(
   'artists/fetchAlbums',
   async (artistId) => {
-    const {data: albums} = await axiosApi.get<Album[]>(`/albums/${artistId}`);
+    const {data: albums} = await axiosApi.get<Album[]>(`/albums?artist=${artistId}`);
     return albums;
   },
 );

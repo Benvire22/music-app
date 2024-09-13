@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardContent, CardHeader } from '@mui/material';
+import { Card, CardContent, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 
 interface Props {
@@ -12,11 +12,11 @@ interface Props {
 const TrackItem: React.FC<Props> = ({ name, number, length }) => {
   return (
     <Grid sx={{ width: '100%' }}>
-      <Card sx={{height: '100%'}}>
-        <strong>#{number}.</strong>
-        <CardHeader title={name}/>
-        <CardContent>
-          <strong>продолжительность: {length}</strong>
+      <Card sx={{border: '2px solid lightblue', pt: '10px'}}>
+        <CardContent sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+          <Typography variant="h5">#{number}. </Typography>
+          <Typography variant="h5">{name}</Typography>
+          <Typography variant="h5">{length}</Typography>
         </CardContent>
       </Card>
     </Grid>

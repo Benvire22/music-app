@@ -26,15 +26,16 @@ const AlbumItem: React.FC<Props> = ({ id, name, image, releaseDate }) => {
   }
 
   return (
-    <Grid sx={{ width: '100%' }}>
-      <Card sx={{ height: '200px' }}>
+    <Grid sx={{ width: '45%' }}>
+      <Card sx={{ height: '100%' }}>
         <CardHeader title={name} />
         <ImageCardMedia image={cardImage} title={name} />
         <CardContent>
           <strong>{releaseDate}</strong>
         </CardContent>
         <CardActions>
-          <IconButton component={Link} to={`/albums/${id}`}>
+          <IconButton sx={{borderRadius: '5%'}} component={Link} to={`/albums/${id}`}>
+            подробнее
             <ArrowForwardIcon />
           </IconButton>
         </CardActions>
