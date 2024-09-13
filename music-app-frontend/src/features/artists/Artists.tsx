@@ -1,14 +1,18 @@
-import { Alert, Button, Grid, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Alert, CircularProgress, Typography } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import React, { useEffect } from 'react';
-import { useAppDispatch } from '../../app/hooks.ts';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { selectArtists, selectFetchingArtists } from './artistsSlice';
+import { fetchArtists } from './artistsThunks';
+import ArtistItem from './components/ArtistItem';
 
 const Artists = () => {
   const dispatch = useAppDispatch();
-  // const artists = useAppSelector(selectArtists);
+  const artists = useAppSelector(selectArtists);
+  const isFetching = useAppSelector(selectFetchingArtists);
 
   useEffect(() => {
-    // dispatch(fetchArtists());
+    dispatch(fetchArtists());
   }, [dispatch]);
 
   let content: React.ReactNode = (
@@ -17,34 +21,30 @@ const Artists = () => {
     </Alert>
   );
 
-  // if (isFetching) {
-  //   content = <CircularProgress />;
-  // } else if (artists.length > 0) {
-  //   content = artists.map((artist) => (
-  //     <ArtistItem
-  //       key={artist._id}
-  //       id={artist._id}
-  //       description={artist.description}
-  //       photo={artist.image}
-  //     />
-  //   ));
-  // }
+  if (isFetching) {
+    content = <CircularProgress />;
+  } else if (artists.length > 0) {
+    content = artists.map((artist) => (
+      <ArtistItem
+        key={artist._id}
+        id={artist._id}
+        name={artist.name}
+        description={artist.description}
+        photo={artist.photo}
+      />
+    ));
+  }
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs container direction="column" spacing={2}>
-        <Grid item container justifyContent="space-between" alignItems="center">
-          <Grid item>
-            <Typography variant="h4">Hello</Typography>
-          </Grid>
-          <Grid item>
-            <Button color="primary" component={Link} to="/products/new">
-              Add product
-            </Button>
+      <Grid container direction="column" spacing={2}>
+        <Grid container justifyContent="space-between" alignItems="center">
+          <Grid>
+            <Typography variant="h4">Artists</Typography>
           </Grid>
         </Grid>
-        <Grid item container spacing={1}>
-          {/*{isFetching && <CircularProgress />}*/}
+        <Grid container spacing={1}>
+          {isFetching && <CircularProgress />}
           {content}
         </Grid>
       </Grid>

@@ -1,9 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
 import { Container, Typography } from '@mui/material';
 import AppToolbar from './UI/AppToolbar/AppToolbar';
-import OneArtist from './features/artists/OneArtist.tsx';
-import OneAlbum from './features/artists/OneAlbum.tsx';
-import Artists from './features/artists/Artists.tsx';
+import OneArtist from './features/artists/OneArtist';
+import OneAlbum from './features/artists/OneAlbum';
+import Artists from './features/artists/Artists';
 const App = () => {
   return (
     <>
@@ -14,7 +14,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Artists />} />
           <Route path="/artists/:artistId" element={<OneArtist />} />
-          <Route path="/albums/:albumsId" element={<OneAlbum />} />
+          <Route path="/albums/:albumId" element={<OneAlbum />} />
           <Route path="*" element={<Typography variant="h1">Not found</Typography>} />
         </Routes>
       </Container>

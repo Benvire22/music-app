@@ -1,9 +1,10 @@
 import React from 'react';
-import { Card, CardActions, CardContent, CardHeader, CardMedia, Grid, IconButton, styled } from '@mui/material';
+import { Card, CardActions, CardContent, CardHeader, CardMedia, IconButton, styled } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import { Link } from 'react-router-dom';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import imageNotFound from '@/assets/images/image-not-found.png';
-import { API_URL } from '../../../constants.ts';
+import { API_URL } from '../../../constants';
+import imageNotFound from '../../../assets/images/image-not-found.png';
 
 const ImageCardMedia = styled(CardMedia)({
   height: 0,
@@ -25,7 +26,7 @@ const ArtistItem: React.FC<Props> = ({ id, name, photo, description }) => {
   }
 
   return (
-    <Grid item sx={{ width: '300px' }}>
+    <Grid sx={{ width: '300px' }}>
       <Card sx={{ height: '100%' }}>
         <CardHeader title={name} />
         <ImageCardMedia image={cardImage} title={name} />

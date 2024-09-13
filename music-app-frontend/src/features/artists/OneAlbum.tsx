@@ -1,31 +1,27 @@
 import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Button, Grid } from '@mui/material';
+import { Button } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { useAppDispatch } from '../../app/hooks.ts';
+import { useAppDispatch } from '../../app/hooks';
 
-const OneArtist = () => {
-  const { albumId } = useParams() as { albumId: string };
+const OneAlbum = () => {
+  const { artistId } = useParams() as { artistId: string };
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    // dispatch(fetchOneAlbum(id));
-  }, [dispatch, albumId]);
+    // dispatch(fetchOneArtist(id));
+  }, [dispatch, artistId]);
 
   return (
     <Grid container direction="column" spacing={2}>
-      <Grid item>
+      <Grid>
         <Button variant="text" startIcon={<ArrowBackIcon />} component={Link} to="/">
-          Back to products
+          Back to Artists
         </Button>
       </Grid>
-      {/*{isFetching && (*/}
-      {/*  <Grid item>*/}
-      {/*    <CircularProgress />*/}
-      {/*  </Grid>*/}
-      {/*)}*/}
     </Grid>
   );
 };
 
-export default OneArtist;
+export default OneAlbum;

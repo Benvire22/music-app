@@ -14,6 +14,19 @@ artistsRouter.get('/', async (_, res, next) => {
   }
 });
 
+artistsRouter.get('/:id', async (req, res, next) => {
+    try {
+        if (!mongoose.isValidObjectId(req.params.id)) {
+            res.status(400).send({ error: 'Invalid artist ID' });
+        }
+
+        const artist = await Artist.findById(req.params.id);
+        return res.send(artist);
+    } catch (e) {
+        return next(e);
+    }
+});
+
 artistsRouter.post('/', imageUpload.single('photo'), async (req, res, next) => {
   try {
     const artist = new Artist({
