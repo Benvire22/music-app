@@ -6,10 +6,14 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectFetchingOneArtist, selectOneArtist } from './artistsSlice';
 import { fetchOneArtist } from './artistsThunks';
+import { fetchAlbums } from '../albums/albumsThunks';
+import { selectAlbums } from '../albums/albumsSlice';
+import AlbumItem from '../albums/components/AlbumItem';
 
 const OneArtist: React.FC = () => {
   const { artistId } = useParams() as { artistId: string };
   const artist = useAppSelector(selectOneArtist);
+  const albums = useAppSelector(selectAlbums);
   const isFetching = useAppSelector(selectFetchingOneArtist);
   const dispatch = useAppDispatch();
   console.log(artistId);
@@ -17,6 +21,7 @@ const OneArtist: React.FC = () => {
   useEffect(() => {
     try {
       void dispatch(fetchOneArtist(artistId)).unwrap();
+      void dispatch(fetchAlbums(artistId));
     } catch (e) {
       console.error(e);
     }
@@ -30,16 +35,23 @@ const OneArtist: React.FC = () => {
 
   if (isFetching) {
     content = <CircularProgress />;
-  } else if (artist) {
-    console.log(artist);
-    content = <div>{artist.name}</div>
+  } else if (albums.length > 0) {
+    content = albums.map((album) => (
+      <AlbumItem
+        key={album._id}
+        id={album._id}
+        name={album.name}
+        releaseDate={album.releaseDate}
+        image={album.image}
+      />
+    ));
   }
 
   return artist && (
     <Grid container direction="column" spacing={2}>
       <Grid>
         <Button variant="text" startIcon={<ArrowBackIcon/>} component={Link} to="/">
-          Back to Artists
+          Back to all Artists
         </Button>
       </Grid>
       {content}

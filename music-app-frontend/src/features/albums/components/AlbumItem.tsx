@@ -3,7 +3,7 @@ import { Card, CardActions, CardContent, CardHeader, CardMedia, IconButton, styl
 import Grid from '@mui/material/Grid2';
 import { Link } from 'react-router-dom';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import imageNotFound from '@/assets/images/image-not-found.png';
+import imageNotFound from '../../../assets/images/image-not-found.png';
 import { API_URL } from '../../../constants';
 
 const ImageCardMedia = styled(CardMedia)({
@@ -13,13 +13,12 @@ const ImageCardMedia = styled(CardMedia)({
 
 interface Props {
   id: string;
-  title: string;
-  price: number;
+  name: string;
+  releaseDate: number;
   image: string | null;
-  category: string;
 }
 
-const AlbumItem: React.FC<Props> = ({ id, title, price, image, category }) => {
+const AlbumItem: React.FC<Props> = ({ id, name, image, releaseDate }) => {
   let cardImage = imageNotFound;
 
   if (image) {
@@ -29,14 +28,13 @@ const AlbumItem: React.FC<Props> = ({ id, title, price, image, category }) => {
   return (
     <Grid sx={{ width: '300px' }}>
       <Card sx={{ height: '100%' }}>
-        <CardHeader title={title} />
-        <ImageCardMedia image={cardImage} title={title} />
+        <CardHeader title={name} />
+        <ImageCardMedia image={cardImage} title={name} />
         <CardContent>
-          <p>Album: {category}</p>
-          <strong>Price: {price} KGS</strong>
+          <strong>{releaseDate}</strong>
         </CardContent>
         <CardActions>
-          <IconButton component={Link} to={`/products/${id}`}>
+          <IconButton component={Link} to={`/albums/${id}`}>
             <ArrowForwardIcon />
           </IconButton>
         </CardActions>

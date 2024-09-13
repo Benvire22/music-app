@@ -18,7 +18,7 @@ export const initialState: ArtistsSlice = {
   fetchOneArtist: false,
 };
 
-const artistsSlice = createSlice({
+export const artistsSlice = createSlice({
   name: 'artists',
   initialState,
   reducers: {},
