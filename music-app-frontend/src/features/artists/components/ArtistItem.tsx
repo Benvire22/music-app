@@ -26,7 +26,7 @@ const ArtistItem: React.FC<Props> = ({ id, name, photo, description }) => {
   }
 
   return (
-    <Grid sx={{ width: '300px' }}>
+    <Grid sx={{ width: '100%' }}>
       <Card sx={{ height: '100%' }}>
         <CardHeader title={name} />
         <ImageCardMedia image={cardImage} title={name} />

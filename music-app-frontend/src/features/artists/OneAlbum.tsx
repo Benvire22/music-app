@@ -5,12 +5,16 @@ import Grid from '@mui/material/Grid2';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { fetchOneAlbum } from '../albums/albumsThunks';
-import { selectFetchingOneAlbum, selectOneAlbum } from '../albums/albumsSlice';
+import { selectOneAlbum } from '../albums/albumsSlice';
+import { selectFetchingTracks, selectTracks } from '../tracks/tracksSlice';
+import TrackItem from '../tracks/components/TrackItem';
 
 const OneAlbum = () => {
   const { albumId } = useParams() as { albumId: string };
   const album = useAppSelector(selectOneAlbum);
-  const isFetching = useAppSelector(selectFetchingOneAlbum);
+  // const isFetching = useAppSelector(selectFetchingOneAlbum);
+  const tracks = useAppSelector(selectTracks);
+  const tracksLoading = useAppSelector(selectFetchingTracks);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -21,23 +25,23 @@ const OneAlbum = () => {
     <CircularProgress />
   );
 
-  if (isFetching) {
+  if (tracksLoading) {
     content = (
       <Alert severity="info" sx={{ width: '100%' }}>
         There are no tracks here!
       </Alert>
     )
-  } // else if (tracks.length > 0) {
-  //   content = tracks.map((track) => (
-  //     <TrackItem
-  //       key={track._id}
-  //       id={track._id}
-  //       name={track.name}
-  //       number={track.releaseDate}
-  //       length={track.image}
-  //     />
-  //   ));
-  // }
+  } else if (tracks.length > 0) {
+    content = tracks.map((track) => (
+      <TrackItem
+        key={track._id}
+        id={track._id}
+        name={track.name}
+        number={track.number}
+        length={track.length}
+      />
+    ));
+  }
 
   return album && (
     <Grid container direction="column" spacing={2}>

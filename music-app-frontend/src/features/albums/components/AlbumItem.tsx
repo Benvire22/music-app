@@ -26,8 +26,8 @@ const AlbumItem: React.FC<Props> = ({ id, name, image, releaseDate }) => {
   }
 
   return (
-    <Grid sx={{ width: '300px' }}>
-      <Card sx={{ height: '100%' }}>
+    <Grid sx={{ width: '100%' }}>
+      <Card sx={{ height: '200px' }}>
         <CardHeader title={name} />
         <ImageCardMedia image={cardImage} title={name} />
         <CardContent>
