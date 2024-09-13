@@ -42,4 +42,4 @@ export const tracksSlice = createSlice({
 
 export const tracksReducer = tracksSlice.reducer;
 
-export const { selectTracks, selectFetchingTracks, selectErrorFetchingTracks } = tracksSlice.selectors;
+export const { selectTracks, selectFetchingTracks } = tracksSlice.selectors;

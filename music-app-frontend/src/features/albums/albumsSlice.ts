@@ -65,8 +65,5 @@ export const albumsReducer = albumsSlice.reducer;
 
 export const {
   selectAlbums,
-  selectFetchingAlbums,
-  selectErrorFetchingAlbums,
   selectOneAlbum,
-  selectFetchingOneAlbum
 } = albumsSlice.selectors;

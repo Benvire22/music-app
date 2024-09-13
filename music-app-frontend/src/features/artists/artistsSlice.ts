@@ -66,7 +66,6 @@ export const artistsReducer = artistsSlice.reducer;
 export const {
   selectArtists,
   selectFetchingArtists,
-  selectErrorFetchingArtists,
   selectOneArtist,
   selectFetchingOneArtist,
 } = artistsSlice.selectors;

@@ -47,7 +47,7 @@ const run = async () => {
       name: 'Paradise',
       artist: sergeyArtist,
       releaseDate: 2012,
-      image: 'fixtures/darkness.webp',
+      image: 'fixtures/paradise.jpg',
   });
 
   await Track.create({
