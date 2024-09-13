@@ -23,29 +23,34 @@ export const albumsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchAlbums.pending, (state) => {
-      state.fetchingAlbums = true;
-      state.errorFetchingAlbums = false;
-    }).addCase(fetchAlbums.fulfilled, (state, {payload: albums}) => {
-      state.albums = albums;
-      state.fetchingAlbums = false;
-    }).addCase(fetchAlbums.rejected, (state) => {
-      state.fetchingAlbums = false;
-      state.errorFetchingAlbums = true;
-    });
+    builder
+      .addCase(fetchAlbums.pending, (state) => {
+        state.fetchingAlbums = true;
+        state.errorFetchingAlbums = false;
+      })
+      .addCase(fetchAlbums.fulfilled, (state, { payload: albums }) => {
+        state.albums = albums;
+        state.fetchingAlbums = false;
+      })
+      .addCase(fetchAlbums.rejected, (state) => {
+        state.fetchingAlbums = false;
+        state.errorFetchingAlbums = true;
+      });
 
-    builder.addCase(fetchOneAlbum.pending, (state) => {
-      state.oneAlbum = null;
-      state.fetchOneAlbum = true;
-      state.errorFetchingAlbums = false;
-    }).addCase(fetchOneAlbum.fulfilled, (state, {payload: album}) => {
-      state.oneAlbum = album;
-      state.fetchOneAlbum = false;
-    }).addCase(fetchOneAlbum.rejected, (state) => {
-      state.fetchOneAlbum = false;
-      state.errorFetchingAlbums = true;
-    });
-
+    builder
+      .addCase(fetchOneAlbum.pending, (state) => {
+        state.oneAlbum = null;
+        state.fetchOneAlbum = true;
+        state.errorFetchingAlbums = false;
+      })
+      .addCase(fetchOneAlbum.fulfilled, (state, { payload: album }) => {
+        state.oneAlbum = album;
+        state.fetchOneAlbum = false;
+      })
+      .addCase(fetchOneAlbum.rejected, (state) => {
+        state.fetchOneAlbum = false;
+        state.errorFetchingAlbums = true;
+      });
   },
   selectors: {
     selectAlbums: (state) => state.albums,
@@ -63,5 +68,5 @@ export const {
   selectFetchingAlbums,
   selectErrorFetchingAlbums,
   selectOneAlbum,
-  selectFetchingOneAlbum,
+  selectFetchingOneAlbum
 } = albumsSlice.selectors;

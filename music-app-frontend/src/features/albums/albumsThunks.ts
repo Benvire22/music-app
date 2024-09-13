@@ -1,20 +1,25 @@
-import {createAsyncThunk} from "@reduxjs/toolkit";
-import {Album} from "../../types";
-import axiosApi from "../../axiosApi";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { Album } from '../../types';
+import axiosApi from '../../axiosApi';
 
+export const fetchAlbums = createAsyncThunk<Album[], string>('artists/fetchAlbums', async (artistId) => {
+  const { data: albums } = await axiosApi.get<Album[]>(`/albums?artist=${artistId}`);
 
-export const fetchAlbums = createAsyncThunk<Album[], string>(
-  'artists/fetchAlbums',
-  async (artistId) => {
-    const {data: albums} = await axiosApi.get<Album[]>(`/albums?artist=${artistId}`);
-    return albums;
-  },
-);
+  if (!albums) {
+    return [];
+  }
 
-export const fetchOneAlbum = createAsyncThunk<Album, string>(
+  return albums;
+});
+
+export const fetchOneAlbum = createAsyncThunk<Album | null, string>(
   'artists/fetchOneAlbum',
   async (artistId) => {
-    const {data: artist} = await axiosApi.get<Album>(`/albums/${artistId}`);
-    return artist;
-  },
-);
+  const { data: album } = await axiosApi.get<Album>(`/albums/${artistId}`);
+
+  if (!album) {
+    return null;
+  }
+
+  return album;
+});

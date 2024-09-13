@@ -12,7 +12,11 @@ const Artists = () => {
   const isFetching = useAppSelector(selectFetchingArtists);
 
   useEffect(() => {
-    dispatch(fetchArtists());
+    try {
+      void dispatch(fetchArtists()).unwrap();
+    } catch (e) {
+      console.error(e);
+    }
   }, [dispatch]);
 
   let content: React.ReactNode = (
@@ -43,7 +47,7 @@ const Artists = () => {
             <Typography variant="h4">Artists</Typography>
           </Grid>
         </Grid>
-        <Grid container spacing={5} justifyContent="center" >
+        <Grid container spacing={5} justifyContent="center">
           {isFetching && <CircularProgress />}
           {content}
         </Grid>

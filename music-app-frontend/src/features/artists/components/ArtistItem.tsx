@@ -27,11 +27,11 @@ const ArtistItem: React.FC<Props> = ({ id, name, photo }) => {
   }
 
   return (
-    <Grid sx={{width: '100%', margin: '20px 0 0 150px'}}>
-      <Card sx={{ display: 'flex', p: 2 } }>
+    <Grid sx={{ width: '100%', margin: '20px 0 0 150px' }}>
+      <Card sx={{ display: 'flex', p: 2 }}>
         <ImageCardMedia image={cardImage} title={name} />
         <CardHeader title={name} />
-        <CardActions sx={{marginLeft: 'auto'}}>
+        <CardActions sx={{ marginLeft: 'auto' }}>
           <IconButton component={Link} to={`/artists/${id}`}>
             <ArrowForwardIcon />
           </IconButton>

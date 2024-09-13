@@ -34,7 +34,7 @@ const AlbumItem: React.FC<Props> = ({ id, name, image, releaseDate }) => {
           <strong>{releaseDate}</strong>
         </CardContent>
         <CardActions>
-          <IconButton sx={{borderRadius: '5%'}} component={Link} to={`/albums/${id}`}>
+          <IconButton sx={{ borderRadius: '5%' }} component={Link} to={`/albums/${id}`}>
             подробнее
             <ArrowForwardIcon />
           </IconButton>

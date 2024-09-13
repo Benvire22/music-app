@@ -7,7 +7,12 @@ const tracksRouter = express.Router();
 tracksRouter.get('/', async (req, res, next) => {
   try {
     const { album } = req.query;
-    const tracks = await Track.find(album ? { album } : {});
+
+    if (!mongoose.isValidObjectId(album)) {
+      return res.status(400).send({ error: 'Invalid album ID' });
+    }
+
+    const tracks = await Track.find(album ? { album } : {}).sort({number: 1});
 
     return res.send(tracks);
   } catch (e) {

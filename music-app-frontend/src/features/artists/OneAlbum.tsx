@@ -13,54 +13,53 @@ import { fetchTracks } from '../tracks/tracksThunks';
 const OneAlbum = () => {
   const { albumId } = useParams() as { albumId: string };
   const album = useAppSelector(selectOneAlbum);
-  // const isFetching = useAppSelector(selectFetchingOneAlbum);
   const tracks = useAppSelector(selectTracks);
   const tracksLoading = useAppSelector(selectFetchingTracks);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    void dispatch(fetchOneAlbum(albumId));
-    void dispatch(fetchTracks(albumId));
+    try {
+      void dispatch(fetchOneAlbum(albumId)).unwrap();
+      void dispatch(fetchTracks(albumId)).unwrap();
+    } catch (e) {
+      console.error(e);
+    }
   }, [dispatch, albumId]);
 
-  let content: React.ReactNode = (
-    <CircularProgress />
-  );
+  let content: React.ReactNode = <CircularProgress />;
 
   if (tracksLoading) {
     content = (
       <Alert severity="info" sx={{ width: '100%' }}>
         There are no tracks here!
       </Alert>
-    )
+    );
   } else if (tracks.length > 0) {
     content = tracks.map((track) => (
-      <TrackItem
-        key={track._id}
-        id={track._id}
-        name={track.name}
-        number={track.number}
-        length={track.length}
-      />
+      <TrackItem key={track._id} id={track._id} name={track.name} number={track.number} length={track.length} />
     ));
   }
 
-  return album && (
+  return (album && (
     <Grid container direction="column" spacing={4}>
       <Grid container justifyContent="space-between" spacing={2} alignItems="center">
         <Grid>
-          <Typography variant="h2" marginBottom="20px">{album.artist.name}</Typography>
-          <Typography variant="h4" color="secondary">Album: {album.name}</Typography>
+          <Typography variant="h2" marginBottom="20px">
+            {album.artist.name}
+          </Typography>
+          <Typography variant="h4" color="secondary">
+            Album: {album.name}
+          </Typography>
         </Grid>
       </Grid>
       <Grid>
-        <Button variant="text" startIcon={<ArrowBackIcon/>} component={Link} to="/">
+        <Button variant="text" startIcon={<ArrowBackIcon />} component={Link} to="/">
           Back to all Artists
         </Button>
       </Grid>
       {content}
     </Grid>
-  );
+  ));
 };
 
 export default OneAlbum;

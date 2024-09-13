@@ -21,7 +21,7 @@ const OneArtist: React.FC = () => {
   useEffect(() => {
     try {
       void dispatch(fetchOneArtist(artistId)).unwrap();
-      void dispatch(fetchAlbums(artistId));
+      void dispatch(fetchAlbums(artistId)).unwrap();
     } catch (e) {
       console.error(e);
     }
@@ -37,30 +37,26 @@ const OneArtist: React.FC = () => {
     content = <CircularProgress />;
   } else if (albums.length > 0) {
     content = albums.map((album) => (
-      <AlbumItem
-        key={album._id}
-        id={album._id}
-        name={album.name}
-        releaseDate={album.releaseDate}
-        image={album.image}
-      />
+      <AlbumItem key={album._id} id={album._id} name={album.name} releaseDate={album.releaseDate} image={album.image} />
     ));
   }
 
-  return artist && (
-    <Grid container direction="column" spacing={3}>
-      <Grid>
-        <Grid container justifyContent="space-between" marginBottom="50px" alignItems="center">
-          <Grid>
-            <Typography variant="h4">{artist.name}</Typography>
+  return (
+    artist && (
+      <Grid container direction="column" spacing={3}>
+        <Grid>
+          <Grid container justifyContent="space-between" marginBottom="50px" alignItems="center">
+            <Grid>
+              <Typography variant="h4">{artist.name}</Typography>
+            </Grid>
           </Grid>
+          <Button variant="text" startIcon={<ArrowBackIcon />} component={Link} to="/">
+            Back to all Artists
+          </Button>
         </Grid>
-        <Button variant="text" startIcon={<ArrowBackIcon/>} component={Link} to="/">
-          Back to all Artists
-        </Button>
+        <Grid container>{content}</Grid>
       </Grid>
-      <Grid container>{content}</Grid>
-    </Grid>
+    )
   );
 };
 

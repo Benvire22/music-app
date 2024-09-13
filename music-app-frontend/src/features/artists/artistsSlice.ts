@@ -23,29 +23,34 @@ export const artistsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchArtists.pending, (state) => {
-      state.fetchingArtists = true;
-      state.errorFetchingArtists = false;
-    }).addCase(fetchArtists.fulfilled, (state, {payload: artists}) => {
-      state.artists = artists;
-      state.fetchingArtists = false;
-    }).addCase(fetchArtists.rejected, (state) => {
-      state.fetchingArtists = false;
-      state.errorFetchingArtists = true;
-    });
+    builder
+      .addCase(fetchArtists.pending, (state) => {
+        state.fetchingArtists = true;
+        state.errorFetchingArtists = false;
+      })
+      .addCase(fetchArtists.fulfilled, (state, { payload: artists }) => {
+        state.artists = artists;
+        state.fetchingArtists = false;
+      })
+      .addCase(fetchArtists.rejected, (state) => {
+        state.fetchingArtists = false;
+        state.errorFetchingArtists = true;
+      });
 
-    builder.addCase(fetchOneArtist.pending, (state) => {
-      state.oneArtist = null;
-      state.fetchOneArtist = true;
-      state.errorFetchingArtists = false;
-    }).addCase(fetchOneArtist.fulfilled, (state, {payload: artist}) => {
-      state.oneArtist = artist;
-      state.fetchOneArtist = false;
-    }).addCase(fetchOneArtist.rejected, (state) => {
-      state.fetchOneArtist = false;
-      state.errorFetchingArtists = true;
-    });
-
+    builder
+      .addCase(fetchOneArtist.pending, (state) => {
+        state.oneArtist = null;
+        state.fetchOneArtist = true;
+        state.errorFetchingArtists = false;
+      })
+      .addCase(fetchOneArtist.fulfilled, (state, { payload: artist }) => {
+        state.oneArtist = artist;
+        state.fetchOneArtist = false;
+      })
+      .addCase(fetchOneArtist.rejected, (state) => {
+        state.fetchOneArtist = false;
+        state.errorFetchingArtists = true;
+      });
   },
   selectors: {
     selectArtists: (state) => state.artists,
