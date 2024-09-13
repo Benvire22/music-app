@@ -22,6 +22,10 @@ const TrackSchema = new Schema<TrackMutation>({
     required: true,
   },
   length: String,
+  number: {
+    type: Number,
+    required: true,
+  }
 });
 
 const Track = mongoose.model('Track', TrackSchema);

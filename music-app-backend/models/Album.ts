@@ -22,7 +22,7 @@ const AlbumSchema = new Schema<AlbumMutation>({
     required: true,
   },
   releaseDate: {
-    type: String,
+    type: Number,
     required: true,
   },
   image: String,

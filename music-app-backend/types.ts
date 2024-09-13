@@ -10,7 +10,7 @@ export interface Artist {
   _id: mongoose.Types.ObjectId;
   name: string;
   photo: string | null;
-  description: string;
+  description: string | null;
 }
 
 export type ArtistMutation = Omit<Artist, '_id'>;
@@ -19,7 +19,7 @@ export interface Album {
   _id: mongoose.Types.ObjectId;
   artist: mongoose.Types.ObjectId | string;
   name: string;
-  releaseDate: string;
+  releaseDate: number;
   image: string | null;
 }
 
@@ -30,6 +30,7 @@ export interface Track {
   album: mongoose.Types.ObjectId | string;
   name: string;
   length: string;
+  number: number;
 }
 
 export type TrackMutation = Omit<Track, '_id'>;
