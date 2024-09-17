@@ -25,6 +25,15 @@ export interface Track {
   number: number;
 }
 
+export interface TrackHistory {
+  _id: string;
+  track: {
+    name: string;
+    artist: string;
+  };
+  datetime: Date;
+}
+
 export interface RegisterMutation {
   username: string;
   password: string;

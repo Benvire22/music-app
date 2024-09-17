@@ -20,13 +20,13 @@ const AppToolbar = () => {
   return (
     <AppBar position="sticky" sx={{ mb: 2 }}>
       <Toolbar>
-        <Grid container justifyContent="space-between" alignItems="center">
+        <Grid sx={{ mx: 'auto' }} container size={10} justifyContent="space-between" alignItems="center" maxWidth="xl">
           <Grid>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Typography variant="h6" component="div">
               <StyledLink to="/">Music app</StyledLink>
             </Typography>
-            {user ? <UserMenu user={user} /> : <AnonymousMenu />}
           </Grid>
+          {user ? <UserMenu user={user} /> : <AnonymousMenu />}
         </Grid>
       </Toolbar>
     </AppBar>
