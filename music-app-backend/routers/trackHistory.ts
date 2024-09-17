@@ -1,28 +1,31 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import User from '../models/User';
 import TrackHistory from '../models/TrackHistory';
+import auth, { RequestWithUser } from '../middleware/auth';
 
 const trackHistoryRouter = express.Router();
 
-trackHistoryRouter.post('/', async (req, res, next) => {
+trackHistoryRouter.get('/', auth, async (req: RequestWithUser, res, next) => {
   try {
-    const headerValue = req.get('Authorization');
-
-    if (!headerValue) {
-      return res.status(401).send({ error: 'Header "Authorization" is not found!' });
-    }
-
-    const [_bearer, token] = headerValue.split(' ');
-
-    if (!token) {
-      return res.status(401).send({ error: 'Token not found!' });
-    }
-
-    const user = await User.findOne({ token });
+    const user = req.user;
 
     if (!user) {
-      return res.status(401).send({ error: 'Unauthorized!' });
+      return  res.status(401).send({error: 'User not found!'})
+    }
+
+    const historyTracks = await TrackHistory.find({user}).sort({ datetime: -1 });
+    return res.send(historyTracks);
+  } catch (e) {
+    return next(e);
+  }
+});
+
+trackHistoryRouter.post('/', auth, async (req: RequestWithUser, res, next) => {
+  try {
+    const user = req.user;
+
+    if (!user) {
+      return  res.status(401).send({error: 'User not found!'})
     }
 
     const trackHistory = new TrackHistory({

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 
 export interface UserField {
   username: string;
@@ -40,3 +40,10 @@ export interface TrackHistoryMutation {
   track: mongoose.Types.ObjectId | string;
   datetime: Date;
 }
+
+export interface UserMethods {
+  checkPassword(password: string): Promise<boolean>;
+  generateToken(): void;
+}
+
+export type UserModel = Model<UserField, {}, UserMethods>;
