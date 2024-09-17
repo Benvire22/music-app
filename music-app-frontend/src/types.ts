@@ -27,10 +27,11 @@ export interface Track {
 
 export interface TrackHistory {
   _id: string;
-  track: {
+  track: Track;
+  artist: {
+    _id: string;
     name: string;
-    artist: string;
-  };
+  }
   datetime: Date;
 }
 

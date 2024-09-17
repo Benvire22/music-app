@@ -9,34 +9,39 @@ export const fetchTracks = createAsyncThunk<Track[], string>('tracks/fetchTracks
   return tracks;
 });
 
-export const fetchHistoryTracks = createAsyncThunk<TrackHistory[], void, { rejectValue: GlobalError; state: RootState }>(
-  'tracks/fetchHistoryTracks',
-  async (_, {rejectWithValue, getState}) => {
-    try {
-      const existingUser = getState().users.user;
+export const fetchHistoryTracks = createAsyncThunk<
+  TrackHistory[],
+  void,
+  { rejectValue: GlobalError; state: RootState }
+>('tracks/fetchHistoryTracks', async (_, { rejectWithValue, getState }) => {
+  try {
+    const existingUser = getState().users.user;
 
-      if (!existingUser) {
-        return [];
-      }
-
-      const {data: historyTracks} = await axiosApi.get<TrackHistory[]>('/track_history', {
-        headers: { Authorization: `Bearer ${existingUser.token}` },
-      });
-
-      return historyTracks;
-    } catch (e) {
-      if (isAxiosError(e) && e.response && e.response.status === 400) {
-        return rejectWithValue(e.response.data);
-      }
-
-      throw e;
+    if (!existingUser) {
+      return [];
     }
-  }
-);
 
-export const addTrackToHistory = createAsyncThunk<void, string, { rejectValue: GlobalError, state: RootState }>(
+    const { data: historyTracks } = await axiosApi.get<TrackHistory[]>('/track_history', {
+      headers: { Authorization: `Bearer ${existingUser.token}` },
+    });
+
+    if (!historyTracks) {
+      return [];
+    }
+
+    return historyTracks;
+  } catch (e) {
+    if (isAxiosError(e) && e.response && e.response.status === 400) {
+      return rejectWithValue(e.response.data);
+    }
+
+    throw e;
+  }
+});
+
+export const addTrackToHistory = createAsyncThunk<void, string, { rejectValue: GlobalError; state: RootState }>(
   'tracks/fetchHistoryTracks',
-  async (trackId, {rejectWithValue, getState}) => {
+  async (trackId, { rejectWithValue, getState }) => {
     try {
       const existingUser = getState().users.user;
 
@@ -56,5 +61,5 @@ export const addTrackToHistory = createAsyncThunk<void, string, { rejectValue: G
 
       throw e;
     }
-  }
+  },
 );

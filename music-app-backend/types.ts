@@ -38,6 +38,7 @@ export type TrackMutation = Omit<Track, '_id'>;
 export interface TrackHistoryMutation {
   user: mongoose.Types.ObjectId;
   track: mongoose.Types.ObjectId | string;
+  artist: mongoose.Types.ObjectId | string;
   datetime: Date;
 }
 

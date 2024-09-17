@@ -16,7 +16,6 @@ const OneArtist: React.FC = () => {
   const albums = useAppSelector(selectAlbums);
   const isFetching = useAppSelector(selectFetchingOneArtist);
   const dispatch = useAppDispatch();
-  console.log(artistId);
 
   useEffect(() => {
     try {
