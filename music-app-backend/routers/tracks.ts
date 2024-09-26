@@ -1,6 +1,8 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import Track from '../models/Track';
+import auth, {RequestWithUser} from "../middleware/auth";
+import permit from "../middleware/permit";
 
 const tracksRouter = express.Router();
 
@@ -20,8 +22,11 @@ tracksRouter.get('/', async (req, res, next) => {
   }
 });
 
-tracksRouter.post('/', async (req, res, next) => {
+tracksRouter.post('/', auth, permit('user', 'admin'), async (req: RequestWithUser, res, next) => {
   try {
+
+
+
     const track = new Track({
       name: req.body.name,
       album: req.body.album,

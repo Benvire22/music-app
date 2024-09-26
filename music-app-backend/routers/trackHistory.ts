@@ -4,6 +4,7 @@ import TrackHistory from '../models/TrackHistory';
 import auth, { RequestWithUser } from '../middleware/auth';
 import Track from '../models/Track';
 import Album from '../models/Album';
+import permit from "../middleware/permit";
 
 const trackHistoryRouter = express.Router();
 
@@ -23,7 +24,7 @@ trackHistoryRouter.get('/', auth, async (req: RequestWithUser, res, next) => {
   }
 });
 
-trackHistoryRouter.post('/', auth, async (req: RequestWithUser, res, next) => {
+trackHistoryRouter.post('/', auth, permit('user', 'admin'), async (req: RequestWithUser, res, next) => {
   try {
     const user = req.user;
 
@@ -38,13 +39,13 @@ trackHistoryRouter.post('/', auth, async (req: RequestWithUser, res, next) => {
     const track = await Track.findById(req.body.track);
 
     if (!track) {
-      return res.status(401).send({ error: 'Track not found!' });
+      return res.status(400).send({ error: 'Track not found!' });
     }
 
     const album = await Album.findById(track.album).populate('artist', 'name');
 
     if (!album) {
-      return res.status(401).send({ error: 'Album not found!' });
+      return res.status(400).send({ error: 'Album not found!' });
     }
 
     const trackHistory = new TrackHistory({

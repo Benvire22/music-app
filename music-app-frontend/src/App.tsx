@@ -26,7 +26,7 @@ const App = () => {
           <Route
             path="/tracks_history"
             element={
-              <ProtectedRoute isAllowed={user && user.role === 'user' || user.role === 'admin'}>
+              <ProtectedRoute isAllowed={user && (user.role === 'user' || user.role === 'admin')}>
                 <TracksHistory />
               </ProtectedRoute>
             }

@@ -1,9 +1,10 @@
 import mongoose, { Model } from 'mongoose';
 
-export interface UserField {
+export interface UserFields {
   username: string;
   password: string;
   token: string;
+  role: string;
 }
 
 export interface Artist {
@@ -47,4 +48,4 @@ export interface UserMethods {
   generateToken(): void;
 }
 
-export type UserModel = Model<UserField, {}, UserMethods>;
+export type UserModel = Model<UserFields, {}, UserMethods>;
