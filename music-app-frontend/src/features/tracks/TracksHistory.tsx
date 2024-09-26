@@ -1,6 +1,4 @@
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { selectUser } from '../users/usersSlice';
-import { Navigate } from 'react-router-dom';
 import { selectFetchingHistoryTracks, selectHistoryTracks } from './tracksSlice';
 import React, { useEffect } from 'react';
 import { Alert, CircularProgress } from '@mui/material';
@@ -9,7 +7,6 @@ import { fetchHistoryTracks } from './tracksThunks';
 import Grid from '@mui/material/Grid2';
 
 const TracksHistory = () => {
-  const user = useAppSelector(selectUser);
   const tracks = useAppSelector(selectHistoryTracks);
   const isLoading = useAppSelector(selectFetchingHistoryTracks);
   const dispatch = useAppDispatch();
@@ -32,13 +29,16 @@ const TracksHistory = () => {
     );
   } else if (tracks?.length > 0) {
     content = tracks.map((track) => (
-      <TrackHistoryItem key={track._id} track={track.track.name} artist={track.artist.name} datetime={track.datetime} />
+      <TrackHistoryItem
+        key={track._id}
+        track={track.track.name}
+        artist={track.artist.name}
+        datetime={track.datetime} />
     ));
   }
 
   return (
     <Grid container justifyContent="center" spacing={2}>
-      {!user && <Navigate to="/" />}
       {content}
     </Grid>
   );

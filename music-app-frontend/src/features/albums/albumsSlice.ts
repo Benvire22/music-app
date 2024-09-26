@@ -2,7 +2,7 @@ import { Album } from '../../types';
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchAlbums, fetchOneAlbum } from './albumsThunks';
 
-export interface ArtistsSlice {
+export interface AlbumState {
   albums: Album[];
   fetchingAlbums: boolean;
   errorFetchingAlbums: boolean;
@@ -10,7 +10,7 @@ export interface ArtistsSlice {
   fetchOneAlbum: boolean;
 }
 
-export const initialState: ArtistsSlice = {
+export const initialState: AlbumState = {
   albums: [],
   fetchingAlbums: false,
   errorFetchingAlbums: false,
@@ -18,7 +18,7 @@ export const initialState: ArtistsSlice = {
   fetchOneAlbum: false,
 };
 
-export const albumsSlice = createSlice({
+export const albumsSlice = createSlice<AlbumState>({
   name: 'albums',
   initialState,
   reducers: {},

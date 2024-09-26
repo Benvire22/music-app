@@ -20,7 +20,7 @@ export const initialState: TracksState = {
   errorFetchingHistoryTracks: false,
 };
 
-export const tracksSlice = createSlice({
+export const tracksSlice = createSlice<TracksState>({
   name: 'tracks',
   initialState,
   reducers: {},

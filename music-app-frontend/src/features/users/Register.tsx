@@ -12,7 +12,6 @@ const Register = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const error = useAppSelector(selectRegisterError);
-  // const loading = useAppSelector(selectRegisterLoading);
 
   const [state, setState] = useState<RegisterMutation>({
     username: '',

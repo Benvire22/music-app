@@ -2,7 +2,7 @@ import { Artist } from '../../types';
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchArtists, fetchOneArtist } from './artistsThunks';
 
-export interface ArtistsSlice {
+export interface ArtistsState {
   artists: Artist[];
   fetchingArtists: boolean;
   errorFetchingArtists: boolean;
@@ -10,7 +10,7 @@ export interface ArtistsSlice {
   fetchOneArtist: boolean;
 }
 
-export const initialState: ArtistsSlice = {
+export const initialState: ArtistsState = {
   artists: [],
   fetchingArtists: false,
   errorFetchingArtists: false,
@@ -18,7 +18,7 @@ export const initialState: ArtistsSlice = {
   fetchOneArtist: false,
 };
 
-export const artistsSlice = createSlice({
+export const artistsSlice = createSlice<ArtistsState>({
   name: 'artists',
   initialState,
   reducers: {},

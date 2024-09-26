@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, Draft } from '@reduxjs/toolkit';
 import { GlobalError, User, ValidationError } from '../../types';
 import { login, register } from './usersThunks';
 
@@ -18,21 +18,27 @@ const initialState: UsersState = {
   loginError: null,
 };
 
-export const usersSlice = createSlice({
+export const usersSlice = createSlice<UsersState, {
+  unsetUser: (state: Draft<UsersState>) => void;
+}>({
   name: 'users',
   initialState,
-  reducers: {},
+  reducers: {
+    unsetUser: (state) => {
+      state.user = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(register.pending, (state) => {
         state.registerError = null;
         state.registerLoading = true;
       })
-      .addCase(register.fulfilled, (state, { payload: user }) => {
+      .addCase(register.fulfilled, (state, {payload: user}) => {
         state.registerLoading = false;
         state.user = user;
       })
-      .addCase(register.rejected, (state, { payload: error }) => {
+      .addCase(register.rejected, (state, {payload: error}) => {
         state.registerError = error || null;
         state.registerLoading = false;
       });
@@ -42,11 +48,11 @@ export const usersSlice = createSlice({
         state.loginError = null;
         state.loginLoading = true;
       })
-      .addCase(login.fulfilled, (state, { payload: user }) => {
+      .addCase(login.fulfilled, (state, {payload: user}) => {
         state.loginLoading = false;
         state.user = user;
       })
-      .addCase(login.rejected, (state, { payload: error }) => {
+      .addCase(login.rejected, (state, {payload: error}) => {
         state.loginError = error || null;
         state.loginLoading = false;
       });
@@ -62,5 +68,12 @@ export const usersSlice = createSlice({
 
 export const usersReducer = usersSlice.reducer;
 
-export const { selectUser, selectRegisterLoading, selectRegisterError, selectLoginLoading, selectLoginError } =
-  usersSlice.selectors;
+export const { unsetUser } = usersSlice.actions;
+
+export const {
+  selectUser,
+  selectRegisterLoading,
+  selectRegisterError,
+  selectLoginLoading,
+  selectLoginError
+} = usersSlice.selectors;
