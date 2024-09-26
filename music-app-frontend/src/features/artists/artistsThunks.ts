@@ -52,3 +52,11 @@ export const togglePublished = createAsyncThunk<void, string>('artists/togglePub
     throw e;
   }
 });
+
+export const deleteArtist = createAsyncThunk<void, string>('artists/delete', async (artistId) => {
+  try {
+    await axiosApi.delete(`/artists/${artistId}`);
+  } catch (e) {
+    throw e;
+  }
+});

@@ -1,6 +1,6 @@
 import { Artist, GlobalError } from '../../types';
 import { createSlice } from '@reduxjs/toolkit';
-import { createArtist, fetchArtists, fetchOneArtist, togglePublished } from './artistsThunks';
+import { createArtist, deleteArtist, fetchArtists, fetchOneArtist, togglePublished } from './artistsThunks';
 
 export interface ArtistsState {
   artists: Artist[];
@@ -11,6 +11,7 @@ export interface ArtistsState {
   isCreating: boolean;
   errorCreating: null | GlobalError;
   isPublishing: boolean;
+  isDeleting: boolean;
 }
 
 export const initialState: ArtistsState = {
@@ -22,6 +23,7 @@ export const initialState: ArtistsState = {
   isCreating: false,
   errorCreating: null,
   isPublishing: false,
+  isDeleting: false,
 };
 
 export const artistsSlice = createSlice<ArtistsState>({
@@ -67,7 +69,7 @@ export const artistsSlice = createSlice<ArtistsState>({
         state.isCreating = false;
       })
       .addCase(createArtist.rejected, (state, {payload: error}) => {
-        state.isCreating = true;
+        state.isCreating = false;
         state.errorCreating = error || null;
       });
 
@@ -79,7 +81,18 @@ export const artistsSlice = createSlice<ArtistsState>({
         state.isPublishing = false;
       })
       .addCase(togglePublished.rejected, (state) => {
-        state.isPublishing = true;
+        state.isPublishing = false;
+      });
+
+    builder
+      .addCase(deleteArtist.pending, (state) => {
+        state.isDeleting = true;
+      })
+      .addCase(deleteArtist.fulfilled, (state) => {
+        state.isDeleting = false;
+      })
+      .addCase(deleteArtist.rejected, (state) => {
+        state.isDeleting = false;
       });
   },
   selectors: {
@@ -91,6 +104,7 @@ export const artistsSlice = createSlice<ArtistsState>({
     selectCreatingArtist: (state) => state.isCreating,
     selectErrorCreatingArtist: (state) => state.errorCreating,
     selectPublishingArtist: (state) => state.isPublishing,
+    selectDeletingArtist: (state) => state.isDeleting,
   },
 });
 
@@ -104,4 +118,5 @@ export const {
   selectCreatingArtist,
   selectErrorCreatingArtist,
   selectPublishingArtist,
+  selectDeletingArtist,
 } = artistsSlice.selectors;

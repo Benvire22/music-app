@@ -6,9 +6,11 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { API_URL } from '../../../constants';
 import imageNotFound from '../../../assets/images/image-not-found.png';
 import { LoadingButton } from '@mui/lab';
-import { useAppDispatch } from '../../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { User } from '../../../types';
-import { fetchArtists, togglePublished } from '../artistsThunks';
+import { deleteArtist, fetchArtists, togglePublished } from '../artistsThunks';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { selectDeletingArtist, selectPublishingArtist } from '../artistsSlice';
 
 const ImageCardMedia = styled(CardMedia)({
   height: '100px',
@@ -22,20 +24,31 @@ interface Props {
   description: string | null;
   photo: string | null;
   isPublished: boolean;
-  admin?: User;
+  user?: User;
 }
 
-const ArtistItem: React.FC<Props> = ({ id, name, photo, isPublished, admin }) => {
+const ArtistItem: React.FC<Props> = ({ id, name, photo, isPublished, user }) => {
   let cardImage = imageNotFound;
   const dispatch = useAppDispatch();
+  const isPublishing = useAppSelector(selectPublishingArtist);
+  const isDeleting = useAppSelector(selectDeletingArtist);
 
   if (photo) {
     cardImage = `${API_URL}/${photo}`;
   }
 
-  const togglePublish = async () => {
+  const handleToggle = async () => {
     try {
       await dispatch(togglePublished(id)).unwrap();
+      await dispatch(fetchArtists()).unwrap();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      await dispatch(deleteArtist(id)).unwrap();
       await dispatch(fetchArtists()).unwrap();
     } catch (e) {
       console.error(e);
@@ -51,18 +64,32 @@ const ArtistItem: React.FC<Props> = ({ id, name, photo, isPublished, admin }) =>
         <ImageCardMedia image={cardImage} title={name} />
         <CardHeader title={name} />
         <CardActions sx={{ marginLeft: 'auto' }}>
-          {admin && admin.role === 'admin' && (
+          {user?.role === 'admin' && !isPublished && (
             <LoadingButton
               type='button'
-              onClick={togglePublish}
+              onClick={handleToggle}
               fullWidth
               color='primary'
-              loading={false}
+              loading={isPublishing}
               loadingPosition='end'
               endIcon={<ArrowForwardIcon />}
               variant='contained'
             >
               <span>Publish</span>
+            </LoadingButton>
+          )}
+          {user?.role === 'admin' && (
+            <LoadingButton
+              type='button'
+              onClick={handleDelete}
+              fullWidth
+              color='error'
+              loading={isDeleting}
+              loadingPosition='end'
+              endIcon={<DeleteForeverIcon />}
+              variant='contained'
+            >
+              <span>delete</span>
             </LoadingButton>
           )}
           <IconButton component={Link} to={`/artists/${id}`}>

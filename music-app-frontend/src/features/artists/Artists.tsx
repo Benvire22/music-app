@@ -40,6 +40,7 @@ const Artists = () => {
             description={artist.description}
             photo={artist.photo}
             isPublished={artist.isPublished}
+            user={user}
           />
         );
       } else if (user?.role === 'admin') {
@@ -51,7 +52,7 @@ const Artists = () => {
             description={artist.description}
             photo={artist.photo}
             isPublished={artist.isPublished}
-            admin={user}
+            user={user}
           />
         )
       }
