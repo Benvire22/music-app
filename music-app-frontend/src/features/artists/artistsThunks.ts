@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Artist } from '../../types';
+import { Artist, ArtistMutation, GlobalError } from '../../types';
 import axiosApi from '../../axiosApi';
+import { isAxiosError } from 'axios';
 
 export const fetchArtists = createAsyncThunk<Artist[]>('artists/fetchArtists', async () => {
   const { data: artists } = await axiosApi.get<Artist[]>('/artists');
@@ -20,4 +21,34 @@ export const fetchOneArtist = createAsyncThunk<Artist | null, string>('artists/f
   }
 
   return artist;
+});
+
+export const createArtist = createAsyncThunk<void, ArtistMutation, { rejectValue: GlobalError }>('artists/create', async (artistMutation, { rejectWithValue }) => {
+  try {
+    const formData = new FormData();
+
+    const keys = Object.keys(artistMutation) as (keyof ArtistMutation)[];
+    keys.forEach((key) => {
+      const value = artistMutation[key];
+      if (value !== null) {
+        formData.append(key, value);
+      }
+    });
+
+    await axiosApi.post(`/artists/`, formData);
+  } catch (e) {
+    if (isAxiosError(e) && e.response && e.response.status === 400) {
+      return rejectWithValue(e.response.data);
+    }
+
+    throw e;
+  }
+});
+
+export const togglePublished = createAsyncThunk<void, string>('artists/togglePublished', async (artistId) => {
+  try {
+    await axiosApi.patch(`/artists/${artistId}/togglePublished`);
+  } catch (e) {
+    throw e;
+  }
 });

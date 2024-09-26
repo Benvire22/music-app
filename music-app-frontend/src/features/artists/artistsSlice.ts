@@ -1,6 +1,6 @@
-import { Artist } from '../../types';
+import { Artist, GlobalError } from '../../types';
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchArtists, fetchOneArtist } from './artistsThunks';
+import { createArtist, fetchArtists, fetchOneArtist, togglePublished } from './artistsThunks';
 
 export interface ArtistsState {
   artists: Artist[];
@@ -8,6 +8,9 @@ export interface ArtistsState {
   errorFetchingArtists: boolean;
   oneArtist: Artist | null;
   fetchOneArtist: boolean;
+  isCreating: boolean;
+  errorCreating: null | GlobalError;
+  isPublishing: boolean;
 }
 
 export const initialState: ArtistsState = {
@@ -16,6 +19,9 @@ export const initialState: ArtistsState = {
   errorFetchingArtists: false,
   oneArtist: null,
   fetchOneArtist: false,
+  isCreating: false,
+  errorCreating: null,
+  isPublishing: false,
 };
 
 export const artistsSlice = createSlice<ArtistsState>({
@@ -51,6 +57,30 @@ export const artistsSlice = createSlice<ArtistsState>({
         state.fetchOneArtist = false;
         state.errorFetchingArtists = true;
       });
+
+    builder
+      .addCase(createArtist.pending, (state) => {
+        state.isCreating = true;
+        state.errorCreating = null;
+      })
+      .addCase(createArtist.fulfilled, (state) => {
+        state.isCreating = false;
+      })
+      .addCase(createArtist.rejected, (state, {payload: error}) => {
+        state.isCreating = true;
+        state.errorCreating = error || null;
+      });
+
+    builder
+      .addCase(togglePublished.pending, (state) => {
+        state.isPublishing = true;
+      })
+      .addCase(togglePublished.fulfilled, (state) => {
+        state.isPublishing = false;
+      })
+      .addCase(togglePublished.rejected, (state) => {
+        state.isPublishing = true;
+      });
   },
   selectors: {
     selectArtists: (state) => state.artists,
@@ -58,6 +88,9 @@ export const artistsSlice = createSlice<ArtistsState>({
     selectErrorFetchingArtists: (state) => state.errorFetchingArtists,
     selectOneArtist: (state) => state.oneArtist,
     selectFetchingOneArtist: (state) => state.fetchOneArtist,
+    selectCreatingArtist: (state) => state.isCreating,
+    selectErrorCreatingArtist: (state) => state.errorCreating,
+    selectPublishingArtist: (state) => state.isPublishing,
   },
 });
 
@@ -68,4 +101,7 @@ export const {
   selectFetchingArtists,
   selectOneArtist,
   selectFetchingOneArtist,
+  selectCreatingArtist,
+  selectErrorCreatingArtist,
+  selectPublishingArtist,
 } = artistsSlice.selectors;

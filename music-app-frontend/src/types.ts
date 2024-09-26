@@ -4,6 +4,13 @@ export interface Artist {
   name: string;
   photo: string | null;
   description: string;
+  isPublished: boolean;
+}
+
+export interface ArtistMutation {
+  name: string;
+  photo: File | null;
+  description: string;
 }
 
 export interface Album {

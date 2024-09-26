@@ -5,8 +5,10 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectArtists, selectFetchingArtists } from './artistsSlice';
 import { fetchArtists } from './artistsThunks';
 import ArtistItem from './components/ArtistItem';
+import { selectUser } from '../users/usersSlice';
 
 const Artists = () => {
+  const user = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
   const artists = useAppSelector(selectArtists);
   const isFetching = useAppSelector(selectFetchingArtists);
@@ -28,15 +30,32 @@ const Artists = () => {
   if (isFetching) {
     content = <CircularProgress />;
   } else if (artists.length > 0) {
-    content = artists.map((artist) => (
-      <ArtistItem
-        key={artist._id}
-        id={artist._id}
-        name={artist.name}
-        description={artist.description}
-        photo={artist.photo}
-      />
-    ));
+    content = artists.map((artist) => {
+      if (artist.isPublished) {
+        return (
+          <ArtistItem
+            key={artist._id}
+            id={artist._id}
+            name={artist.name}
+            description={artist.description}
+            photo={artist.photo}
+            isPublished={artist.isPublished}
+          />
+        );
+      } else if (user?.role === 'admin') {
+        return (
+          <ArtistItem
+            key={artist._id}
+            id={artist._id}
+            name={artist.name}
+            description={artist.description}
+            photo={artist.photo}
+            isPublished={artist.isPublished}
+            admin={user}
+          />
+        )
+      }
+    });
   }
 
   return (
