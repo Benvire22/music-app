@@ -48,10 +48,18 @@ albumsRouter.post('/', imageUpload.single('image'), auth, permit('user', 'admin'
       return res.status(401).send({ error: 'User not found!' });
     }
 
+    if (!req.body.name || !req.body.artist || !req.body.releaseDate) {
+      return res.status(400).send({error: 'All fields are required!'});
+    }
+
+    if (parseFloat(req.body.releaseDate) < 1) {
+      return res.status(400).send({error: 'Release date cannot be negative!'});
+    }
+
     const album = new Album({
       name: req.body.name,
       artist: req.body.artist,
-      releaseDate: req.body.releaseDate,
+      releaseDate: parseFloat(req.body.releaseDate),
       image: req.file ? req.file.filename : null,
     });
 

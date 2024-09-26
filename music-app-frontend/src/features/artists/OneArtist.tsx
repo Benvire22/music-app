@@ -6,11 +6,13 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectFetchingOneArtist, selectOneArtist } from './artistsSlice';
 import { fetchOneArtist } from './artistsThunks';
-import { fetchAlbums } from '../albums/albumsThunks';
+import { deleteAlbum, fetchAlbums, togglePublishedAlbum } from '../albums/albumsThunks';
 import { selectAlbums } from '../albums/albumsSlice';
 import AlbumItem from '../albums/components/AlbumItem';
+import { selectUser } from '../users/usersSlice';
 
 const OneArtist: React.FC = () => {
+  const user = useAppSelector(selectUser);
   const { artistId } = useParams() as { artistId: string };
   const artist = useAppSelector(selectOneArtist);
   const albums = useAppSelector(selectAlbums);
@@ -26,6 +28,25 @@ const OneArtist: React.FC = () => {
     }
   }, [dispatch, artistId]);
 
+  const handleToggle = async (id: string) => {
+    try {
+      await dispatch(togglePublishedAlbum(id)).unwrap();
+      await dispatch(fetchAlbums(artistId)).unwrap();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    try {
+      console.log(1);
+      await dispatch(deleteAlbum(id)).unwrap();
+      await dispatch(fetchAlbums(artistId)).unwrap();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   let content: React.ReactNode = (
     <Alert severity="info" sx={{ width: '100%' }}>
       There are no tracks here!
@@ -35,9 +56,36 @@ const OneArtist: React.FC = () => {
   if (isFetching) {
     content = <CircularProgress />;
   } else if (albums.length > 0) {
-    content = albums.map((album) => (
-      <AlbumItem key={album._id} id={album._id} name={album.name} releaseDate={album.releaseDate} image={album.image} />
-    ));
+    content = albums.map((album) => {
+      if (album.isPublished) {
+        return (
+          <AlbumItem
+            key={album._id}
+            id={album._id}
+            name={album.name}
+            releaseDate={album.releaseDate}
+            image={album.image}
+            isPublished={album.isPublished}
+            user={user}
+            handleDelete={() => handleDelete(album._id)}
+          />
+        );
+      } else if (user?.role === 'admin') {
+        return (
+          <AlbumItem
+            key={album._id}
+            id={album._id}
+            name={album.name}
+            releaseDate={album.releaseDate}
+            image={album.image}
+            isPublished={album.isPublished}
+            user={user}
+            handleToggle={() => handleToggle(album._id)}
+            handleDelete={() => handleDelete(album._id)}
+          />
+        );
+      }
+    });
   }
 
   return (

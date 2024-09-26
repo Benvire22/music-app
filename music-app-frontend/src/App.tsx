@@ -11,6 +11,7 @@ import ProtectedRoute from './UI/ProtectedRoute/ProtectedRoute';
 import { useAppSelector } from './app/hooks';
 import { selectUser } from './features/users/usersSlice';
 import NewArtist from './features/artists/NewArtist';
+import NewAlbum from './features/albums/NewAlbum';
 
 const App = () => {
   const user = useAppSelector(selectUser);
@@ -32,6 +33,14 @@ const App = () => {
             }
           />
           <Route path="/albums/:albumId" element={<OneAlbum />} />
+          <Route
+            path="/albums/new"
+            element={
+              <ProtectedRoute isAllowed={user && (user.role === 'user' || user.role === 'admin')}>
+                <NewAlbum />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/tracks_history"
             element={

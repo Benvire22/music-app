@@ -1,6 +1,6 @@
-import { Album } from '../../types';
+import { Album, GlobalError } from '../../types';
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchAlbums, fetchOneAlbum } from './albumsThunks';
+import { createAlbum, deleteAlbum, fetchAlbums, fetchOneAlbum, togglePublishedAlbum } from './albumsThunks';
 
 export interface AlbumState {
   albums: Album[];
@@ -8,6 +8,10 @@ export interface AlbumState {
   errorFetchingAlbums: boolean;
   oneAlbum: Album | null;
   fetchOneAlbum: boolean;
+  isCreating: boolean;
+  errorCreating: null | GlobalError;
+  isPublishing: boolean;
+  isDeleting: boolean;
 }
 
 export const initialState: AlbumState = {
@@ -16,6 +20,10 @@ export const initialState: AlbumState = {
   errorFetchingAlbums: false,
   oneAlbum: null,
   fetchOneAlbum: false,
+  isCreating: false,
+  errorCreating: null,
+  isPublishing: false,
+  isDeleting: false,
 };
 
 export const albumsSlice = createSlice<AlbumState>({
@@ -51,6 +59,41 @@ export const albumsSlice = createSlice<AlbumState>({
         state.fetchOneAlbum = false;
         state.errorFetchingAlbums = true;
       });
+
+    builder
+      .addCase(createAlbum.pending, (state) => {
+        state.isCreating = true;
+        state.errorCreating = null;
+      })
+      .addCase(createAlbum.fulfilled, (state) => {
+        state.isCreating = false;
+      })
+      .addCase(createAlbum.rejected, (state, {payload: error}) => {
+        state.isCreating = false;
+        state.errorCreating = error || null;
+      });
+
+    builder
+      .addCase(togglePublishedAlbum.pending, (state) => {
+        state.isPublishing = true;
+      })
+      .addCase(togglePublishedAlbum.fulfilled, (state) => {
+        state.isPublishing = false;
+      })
+      .addCase(togglePublishedAlbum.rejected, (state) => {
+        state.isPublishing = false;
+      });
+
+    builder
+      .addCase(deleteAlbum.pending, (state) => {
+        state.isDeleting = true;
+      })
+      .addCase(deleteAlbum.fulfilled, (state) => {
+        state.isDeleting = false;
+      })
+      .addCase(deleteAlbum.rejected, (state) => {
+        state.isDeleting = false;
+      });
   },
   selectors: {
     selectAlbums: (state) => state.albums,
@@ -58,6 +101,10 @@ export const albumsSlice = createSlice<AlbumState>({
     selectErrorFetchingAlbums: (state) => state.errorFetchingAlbums,
     selectOneAlbum: (state) => state.oneAlbum,
     selectFetchingOneAlbum: (state) => state.fetchOneAlbum,
+    selectCreatingAlbum: (state) => state.isCreating,
+    selectErrorCreatingAlbum: (state) => state.errorCreating,
+    selectPublishingAlbum: (state) => state.isPublishing,
+    selectDeletingAlbum: (state) => state.isDeleting,
   },
 });
 
@@ -66,4 +113,8 @@ export const albumsReducer = albumsSlice.reducer;
 export const {
   selectAlbums,
   selectOneAlbum,
+  selectCreatingAlbum,
+  selectErrorCreatingAlbum,
+  selectPublishingAlbum,
+  selectDeletingAlbum,
 } = albumsSlice.selectors;

@@ -28,15 +28,15 @@ const UserMenu: React.FC<Props> = ({ user }) => {
       <Button onClick={handleClose} color="inherit" component={NavLink} to='/artists/new'>
         add Artist
       </Button>
+      <Button onClick={handleClose} color="inherit" component={NavLink} to='/albums/new'>
+        add new album
+      </Button>
       <Button color="inherit" sx={{ml: 4}} onClick={handleClick}>
         {user.username}
       </Button>
       <Menu open={isOpen} onClose={handleClose} anchorEl={anchorEl} keepMounted>
         <MenuItem onClick={handleClose} component={NavLink} to="/tracks_history">
           Show tracks history
-        </MenuItem>
-        <MenuItem onClick={handleClose} component={NavLink} to='/artists/new'>
-          add new Artist
         </MenuItem>
         <MenuItem>My account</MenuItem>
         <MenuItem onClick={handleLogout}>Logout</MenuItem>

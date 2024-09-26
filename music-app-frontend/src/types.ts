@@ -22,6 +22,14 @@ export interface Album {
   name: string;
   releaseDate: number;
   image: string | null;
+  isPublished: boolean;
+}
+
+export interface AlbumMutation {
+  artist: string
+  name: string;
+  releaseDate: string;
+  image: File | null;
 }
 
 export interface Track {
