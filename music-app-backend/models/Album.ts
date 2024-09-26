@@ -1,10 +1,10 @@
 import mongoose, { Types } from 'mongoose';
 import Artist from './Artist';
-import { AlbumMutation } from '../types';
+import {AlbumModel, AlbumMutation} from '../types';
 
 const Schema = mongoose.Schema;
 
-const AlbumSchema = new Schema<AlbumMutation>({
+const AlbumSchema = new Schema<AlbumMutation, AlbumModel>({
   artist: {
     type: Schema.Types.ObjectId,
     ref: 'Artist',
@@ -26,7 +26,12 @@ const AlbumSchema = new Schema<AlbumMutation>({
     required: true,
   },
   image: String,
+  isPublished: {
+    type: Boolean,
+    required: true,
+    default: false,
+  }
 });
 
-const Album = mongoose.model('Album', AlbumSchema);
+const Album = mongoose.model<AlbumMutation, AlbumModel>('Album', AlbumSchema);
 export default Album;

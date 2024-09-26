@@ -7,34 +7,42 @@ export interface UserFields {
   role: string;
 }
 
-export interface Artist {
+export interface ArtistI {
   _id: mongoose.Types.ObjectId;
   name: string;
   photo: string | null;
   description: string | null;
+  isPublished: boolean;
 }
 
-export type ArtistMutation = Omit<Artist, '_id'>;
+export type ArtistMutation = Omit<ArtistI, '_id'>;
 
-export interface Album {
+export type ArtistModel = Model<ArtistMutation>;
+
+export interface AlbumI {
   _id: mongoose.Types.ObjectId;
   artist: mongoose.Types.ObjectId | string;
   name: string;
   releaseDate: number;
   image: string | null;
+  isPublished: boolean;
 }
 
-export type AlbumMutation = Omit<Album, '_id'>;
+export type AlbumMutation = Omit<AlbumI, '_id'>;
+export type AlbumModel = Model<AlbumMutation>;
 
-export interface Track {
+export interface TrackI {
   _id: mongoose.Types.ObjectId;
   album: mongoose.Types.ObjectId | string;
   name: string;
   length: string;
   number: number;
+  isPublished: boolean;
 }
 
-export type TrackMutation = Omit<Track, '_id'>;
+export type TrackMutation = Omit<TrackI, '_id'>;
+export type TrackModel = Model<TrackMutation>;
+
 
 export interface TrackHistoryMutation {
   user: mongoose.Types.ObjectId;

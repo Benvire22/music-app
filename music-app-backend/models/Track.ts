@@ -1,10 +1,10 @@
 import mongoose, { Types } from 'mongoose';
 import Album from './Album';
-import { TrackMutation } from '../types';
+import { TrackModel, TrackMutation} from '../types';
 
 const Schema = mongoose.Schema;
 
-const TrackSchema = new Schema<TrackMutation>({
+const TrackSchema = new Schema<TrackMutation, TrackModel>({
   album: {
     type: Schema.Types.ObjectId,
     ref: 'Album',
@@ -25,8 +25,13 @@ const TrackSchema = new Schema<TrackMutation>({
   number: {
     type: Number,
     required: true,
+  },
+  isPublished: {
+    type: Boolean,
+    required: true,
+    default: false,
   }
 });
 
-const Track = mongoose.model('Track', TrackSchema);
+const Track = mongoose.model<TrackMutation, TrackModel>('Track', TrackSchema);
 export default Track;
