@@ -12,6 +12,7 @@ import { useAppSelector } from './app/hooks';
 import { selectUser } from './features/users/usersSlice';
 import NewArtist from './features/artists/NewArtist';
 import NewAlbum from './features/albums/NewAlbum';
+import NewTrack from './features/tracks/NewTrack';
 
 const App = () => {
   const user = useAppSelector(selectUser);
@@ -38,6 +39,14 @@ const App = () => {
             element={
               <ProtectedRoute isAllowed={user && (user.role === 'user' || user.role === 'admin')}>
                 <NewAlbum />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/tracks/new"
+            element={
+              <ProtectedRoute isAllowed={user && (user.role === 'user' || user.role === 'admin')}>
+                <NewTrack />
               </ProtectedRoute>
             }
           />

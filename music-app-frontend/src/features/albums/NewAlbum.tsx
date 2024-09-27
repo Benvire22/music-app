@@ -16,10 +16,8 @@ const NewAlbum = () => {
     try {
       await dispatch(createAlbum(albumMutation)).unwrap();
       navigate('/');
-      // toast.success('Post has been created!');
     } catch (error) {
       console.error(error);
-      // toast.error('Error creating post!');
     }
   };
 

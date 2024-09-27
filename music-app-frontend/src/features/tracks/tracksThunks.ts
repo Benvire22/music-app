@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { GlobalError, Track, TrackHistory } from '../../types';
+import { GlobalError, Track, TrackHistory, TrackMutation } from '../../types';
 import axiosApi from '../../axiosApi';
 import { RootState } from '../../app/store';
 import { isAxiosError } from 'axios';
@@ -63,3 +63,32 @@ export const addTrackToHistory = createAsyncThunk<void, string, { rejectValue: G
     }
   },
 );
+
+
+export const createTrack = createAsyncThunk<void, TrackMutation, { rejectValue: GlobalError }>('tracks/create', async (trackMutation, { rejectWithValue }) => {
+  try {
+    await axiosApi.post(`/tracks/`, trackMutation);
+  } catch (e) {
+    if (isAxiosError(e) && e.response && e.response.status === 400) {
+      return rejectWithValue(e.response.data);
+    }
+
+    throw e;
+  }
+});
+
+export const togglePublishedTrack = createAsyncThunk<void, string>('tracks/togglePublished', async (trackId) => {
+  try {
+    await axiosApi.patch(`/tracks/${trackId}/togglePublished`);
+  } catch (e) {
+    throw e;
+  }
+});
+
+export const deleteTrack = createAsyncThunk<void, string>('tracks/delete', async (trackId) => {
+  try {
+    await axiosApi.delete(`/tracks/${trackId}`);
+  } catch (e) {
+    throw e;
+  }
+});

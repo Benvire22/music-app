@@ -1,6 +1,6 @@
-import { Track, TrackHistory } from '../../types';
+import { GlobalError, Track, TrackHistory } from '../../types';
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchHistoryTracks, fetchTracks } from './tracksThunks';
+import { createTrack, deleteTrack, fetchHistoryTracks, fetchTracks, togglePublishedTrack } from './tracksThunks';
 
 export interface TracksState {
   tracks: Track[];
@@ -9,6 +9,10 @@ export interface TracksState {
   trackHistory: TrackHistory[];
   fetchLoadingHistoryTracks: boolean;
   errorFetchingHistoryTracks: boolean;
+  isCreating: boolean;
+  errorCreating: null | GlobalError;
+  isPublishing: boolean;
+  isDeleting: boolean;
 }
 
 export const initialState: TracksState = {
@@ -18,6 +22,10 @@ export const initialState: TracksState = {
   trackHistory: [],
   fetchLoadingHistoryTracks: false,
   errorFetchingHistoryTracks: false,
+  isCreating: false,
+  errorCreating: null,
+  isPublishing: false,
+  isDeleting: false,
 };
 
 export const tracksSlice = createSlice<TracksState>({
@@ -52,6 +60,41 @@ export const tracksSlice = createSlice<TracksState>({
         state.fetchingTracks = false;
         state.errorFetchingTracks = true;
       });
+
+    builder
+      .addCase(createTrack.pending, (state) => {
+        state.isCreating = true;
+        state.errorCreating = null;
+      })
+      .addCase(createTrack.fulfilled, (state) => {
+        state.isCreating = false;
+      })
+      .addCase(createTrack.rejected, (state, {payload: error}) => {
+        state.isCreating = false;
+        state.errorCreating = error || null;
+      });
+
+    builder
+      .addCase(togglePublishedTrack.pending, (state) => {
+        state.isPublishing = true;
+      })
+      .addCase(togglePublishedTrack.fulfilled, (state) => {
+        state.isPublishing = false;
+      })
+      .addCase(togglePublishedTrack.rejected, (state) => {
+        state.isPublishing = false;
+      });
+
+    builder
+      .addCase(deleteTrack.pending, (state) => {
+        state.isDeleting = true;
+      })
+      .addCase(deleteTrack.fulfilled, (state) => {
+        state.isDeleting = false;
+      })
+      .addCase(deleteTrack.rejected, (state) => {
+        state.isDeleting = false;
+      });
   },
   selectors: {
     selectTracks: (state) => state.tracks,
@@ -60,6 +103,10 @@ export const tracksSlice = createSlice<TracksState>({
     selectHistoryTracks: (state) => state.trackHistory,
     selectFetchingHistoryTracks: (state) => state.fetchLoadingHistoryTracks,
     selectFetchingErrorHistoryTrack: (state) => state.errorFetchingHistoryTracks,
+    selectCreatingTrack: (state) => state.isCreating,
+    selectErrorCreatingTrack: (state) => state.errorCreating,
+    selectPublishingTrack: (state) => state.isPublishing,
+    selectDeletingTrack: (state) => state.isDeleting,
   },
 });
 
@@ -69,5 +116,9 @@ export const {
   selectTracks,
   selectFetchingTracks,
   selectHistoryTracks,
-  selectFetchingHistoryTracks
+  selectFetchingHistoryTracks,
+  selectCreatingTrack,
+  selectErrorCreatingTrack,
+  selectPublishingTrack,
+  selectDeletingTrack,
 } = tracksSlice.selectors;

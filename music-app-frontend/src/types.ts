@@ -34,10 +34,19 @@ export interface AlbumMutation {
 
 export interface Track {
   _id: string;
-  album: string;
   name: string;
+  album: string;
   length: string;
   number: number;
+  isPublished: boolean;
+}
+
+export interface TrackMutation {
+  name: string;
+  album: string;
+  artist: string;
+  length: string;
+  number: string;
 }
 
 export interface TrackHistory {

@@ -39,7 +39,6 @@ const OneArtist: React.FC = () => {
 
   const handleDelete = async (id: string) => {
     try {
-      console.log(1);
       await dispatch(deleteAlbum(id)).unwrap();
       await dispatch(fetchAlbums(artistId)).unwrap();
     } catch (e) {

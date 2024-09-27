@@ -30,10 +30,19 @@ tracksRouter.post('/', auth, permit('user', 'admin'), async (req: RequestWithUse
       return res.status(401).send({ error: 'User not found!' });
     }
 
+    if (!req.body.name || !req.body.album || !req.body.length || !req.body.number) {
+      return res.status(400).send({error: 'All fields are required!'});
+    }
+
+    if (parseFloat(req.body.number) < 1) {
+      return res.status(400).send({error: 'number date cannot be negative!'});
+    }
+
     const track = new Track({
       name: req.body.name,
       album: req.body.album,
       length: req.body.length,
+      number: parseFloat(req.body.number),
     });
 
     await track.save();

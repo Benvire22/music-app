@@ -25,17 +25,20 @@ const UserMenu: React.FC<Props> = ({ user }) => {
 
   return (
     <Grid>
-      <Button onClick={handleClose} color="inherit" component={NavLink} to='/artists/new'>
+      <Button onClick={handleClose} color='inherit' component={NavLink} to='/artists/new'>
         add Artist
       </Button>
-      <Button onClick={handleClose} color="inherit" component={NavLink} to='/albums/new'>
-        add new album
+      <Button onClick={handleClose} color='inherit' component={NavLink} to='/albums/new'>
+        new album
       </Button>
-      <Button color="inherit" sx={{ml: 4}} onClick={handleClick}>
+      <Button onClick={handleClose} color='inherit' component={NavLink} to='/tracks/new'>
+        new track
+      </Button>
+      <Button color='inherit' sx={{ ml: 10 }} onClick={handleClick}>
         {user.username}
       </Button>
       <Menu open={isOpen} onClose={handleClose} anchorEl={anchorEl} keepMounted>
-        <MenuItem onClick={handleClose} component={NavLink} to="/tracks_history">
+        <MenuItem onClick={handleClose} component={NavLink} to='/tracks_history'>
           Show tracks history
         </MenuItem>
         <MenuItem>My account</MenuItem>
