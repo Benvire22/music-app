@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField } from '@mui/material';
+import { Alert, TextField } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import { LoadingButton } from '@mui/lab';
 import SaveIcon from '@mui/icons-material/Save';
@@ -21,10 +21,6 @@ const ArtistForm: React.FC<Props> = ({ onSubmit, isLoading }) => {
     description: '',
     photo: null,
   });
-
-  const getFieldError = (fieldName: string) => {
-    return error?.errors[fieldName]?.message;
-  };
 
   const submitFormHandler = (event: React.FormEvent) => {
     event.preventDefault();
@@ -51,29 +47,29 @@ const ArtistForm: React.FC<Props> = ({ onSubmit, isLoading }) => {
 
   return (
     <Grid container direction='column' spacing={2} component='form' onSubmit={submitFormHandler}>
+      {error && (
+        <Alert severity='error' sx={{ mt: 3 }}>
+          {error.error}
+        </Alert>
+      )}
       <Grid>
         <TextField
-          required
           label='Artist name'
           id='name'
           name='name'
           value={state.name}
           onChange={inputChangeHandler}
-          error={Boolean(getFieldError('name'))}
-          helperText={getFieldError('name')}
         />
       </Grid>
       <Grid>
         <TextField
           multiline
-          minRows={3}
+          minRows={4}
           label='Description'
           id='description'
           name='description'
           value={state.description}
           onChange={inputChangeHandler}
-          error={Boolean(getFieldError('description'))}
-          helperText={getFieldError('description')}
         />
       </Grid>
       <Grid>
@@ -81,8 +77,6 @@ const ArtistForm: React.FC<Props> = ({ onSubmit, isLoading }) => {
           label='Photo'
           name='photo'
           onChange={fileInputChangeHandler}
-          error={Boolean(getFieldError('photo'))}
-          helperText={getFieldError('photo')}
         />
       </Grid>
       <Grid>

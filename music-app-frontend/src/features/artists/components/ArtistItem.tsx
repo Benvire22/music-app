@@ -56,9 +56,9 @@ const ArtistItem: React.FC<Props> = ({ id, name, photo, isPublished, user }) => 
   };
 
   return (
-    <Grid sx={{ width: '100%', margin: '20px 0 0 150px' }}>
+    <Grid sx={{ width: '100%', margin: '20px 0 0 60px' }}>
       {!isPublished && (
-        <Typography variant='h5' color="#ccc" >Not published</Typography>
+        <Typography variant='h5' color='#ccc'>Not published</Typography>
       )}
       <Card sx={{ display: 'flex', p: 2 }}>
         <ImageCardMedia image={cardImage} title={name} />

@@ -68,7 +68,7 @@ export const albumsSlice = createSlice<AlbumState>({
       .addCase(createAlbum.fulfilled, (state) => {
         state.isCreating = false;
       })
-      .addCase(createAlbum.rejected, (state, {payload: error}) => {
+      .addCase(createAlbum.rejected, (state, { payload: error }) => {
         state.isCreating = false;
         state.errorCreating = error || null;
       });
@@ -112,7 +112,9 @@ export const albumsReducer = albumsSlice.reducer;
 
 export const {
   selectAlbums,
+  selectFetchingAlbums,
   selectOneAlbum,
+  selectFetchingOneAlbum,
   selectCreatingAlbum,
   selectErrorCreatingAlbum,
   selectPublishingAlbum,

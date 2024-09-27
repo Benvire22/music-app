@@ -37,6 +37,10 @@ artistsRouter.post('/', imageUpload.single('photo'), auth, permit('user', 'admin
       return res.status(401).send({ error: 'User not found!' });
     }
 
+    if (!req.body.name) {
+      return res.status(400).send({error: 'Artist name are required!'});
+    }
+
     const artist = new Artist({
       name: req.body.name,
       photo: req.file ? req.file.filename : null,

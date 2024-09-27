@@ -5,7 +5,7 @@ import Grid from '@mui/material/Grid2';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { fetchOneAlbum } from '../albums/albumsThunks';
-import { selectOneAlbum } from '../albums/albumsSlice';
+import { selectFetchingOneAlbum, selectOneAlbum } from '../albums/albumsSlice';
 import { selectFetchingTracks, selectTracks } from '../tracks/tracksSlice';
 import TrackItem from '../tracks/components/TrackItem';
 import { deleteTrack, fetchTracks, togglePublishedTrack } from '../tracks/tracksThunks';
@@ -15,6 +15,7 @@ const OneAlbum = () => {
   const user = useAppSelector(selectUser);
   const { albumId } = useParams() as { albumId: string };
   const album = useAppSelector(selectOneAlbum);
+  const isFetching = useAppSelector(selectFetchingOneAlbum);
   const tracks = useAppSelector(selectTracks);
   const tracksLoading = useAppSelector(selectFetchingTracks);
   const dispatch = useAppDispatch();
@@ -53,7 +54,11 @@ const OneAlbum = () => {
   );
 
   if (tracksLoading) {
-    content = <CircularProgress />;
+    content = (
+      <Grid container size={12} direction='column' alignItems='center' justifyContent='center' spacing={2}>
+        <CircularProgress />
+      </Grid>
+    );
   } else if (tracks.length > 0) {
     content = tracks.map((track) => {
       if (track.isPublished) {
@@ -87,16 +92,22 @@ const OneAlbum = () => {
     });
   }
 
-  return (album && (
+  return (
     <Grid container direction='column' spacing={4}>
       <Grid container justifyContent='space-between' spacing={2} alignItems='center'>
         <Grid>
-          <Typography variant='h2' marginBottom='20px'>
-            {album.artist.name}
-          </Typography>
-          <Typography variant='h4' color='secondary'>
-            Album: {album.name}
-          </Typography>
+          {isFetching ? (
+            <CircularProgress />
+          ) : (
+            <>
+              <Typography variant='h2' marginBottom='20px'>
+                {album?.artist.name}
+              </Typography>
+              <Typography variant='h4' color='secondary'>
+                Album: {album?.name}
+              </Typography>
+            </>
+          )}
         </Grid>
       </Grid>
       <Grid>
@@ -106,7 +117,7 @@ const OneAlbum = () => {
       </Grid>
       {content}
     </Grid>
-  ));
+  );
 };
 
 export default OneAlbum;

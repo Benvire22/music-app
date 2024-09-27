@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectFetchingOneArtist, selectOneArtist } from './artistsSlice';
 import { fetchOneArtist } from './artistsThunks';
 import { deleteAlbum, fetchAlbums, togglePublishedAlbum } from '../albums/albumsThunks';
-import { selectAlbums } from '../albums/albumsSlice';
+import { selectAlbums, selectFetchingAlbums } from '../albums/albumsSlice';
 import AlbumItem from '../albums/components/AlbumItem';
 import { selectUser } from '../users/usersSlice';
 
@@ -16,6 +16,7 @@ const OneArtist: React.FC = () => {
   const { artistId } = useParams() as { artistId: string };
   const artist = useAppSelector(selectOneArtist);
   const albums = useAppSelector(selectAlbums);
+  const albumsLoading = useAppSelector(selectFetchingAlbums);
   const isFetching = useAppSelector(selectFetchingOneArtist);
   const dispatch = useAppDispatch();
 
@@ -47,13 +48,17 @@ const OneArtist: React.FC = () => {
   };
 
   let content: React.ReactNode = (
-    <Alert severity="info" sx={{ width: '100%' }}>
+    <Alert severity='info' sx={{ width: '100%' }}>
       There are no tracks here!
     </Alert>
   );
 
-  if (isFetching) {
-    content = <CircularProgress />;
+  if (albumsLoading) {
+    content = (
+      <Grid container size={12} direction='column' alignItems='center' justifyContent='center' spacing={2}>
+        <CircularProgress />
+      </Grid>
+    );
   } else if (albums.length > 0) {
     content = albums.map((album) => {
       if (album.isPublished) {
@@ -88,21 +93,19 @@ const OneArtist: React.FC = () => {
   }
 
   return (
-    artist && (
-      <Grid container direction="column" spacing={3}>
-        <Grid>
-          <Grid container justifyContent="space-between" marginBottom="50px" alignItems="center">
-            <Grid>
-              <Typography variant="h4">{artist.name}</Typography>
-            </Grid>
+    <Grid container direction='column' spacing={3}>
+      <Grid>
+        <Grid container justifyContent='space-between' marginBottom='50px' alignItems='center'>
+          <Grid>
+            <Typography variant='h4'>{artist?.name || (isFetching && <CircularProgress />)}</Typography>
           </Grid>
-          <Button variant="text" startIcon={<ArrowBackIcon />} component={Link} to="/">
-            Back to all Artists
-          </Button>
         </Grid>
-        <Grid container>{content}</Grid>
+        <Button variant='text' startIcon={<ArrowBackIcon />} component={Link} to='/'>
+          Back to all Artists
+        </Button>
       </Grid>
-    )
+      <Grid container>{content}</Grid>
+    </Grid>
   );
 };
 

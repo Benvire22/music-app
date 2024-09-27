@@ -22,13 +22,17 @@ const Artists = () => {
   }, [dispatch]);
 
   let content: React.ReactNode = (
-    <Alert severity="info" sx={{ width: '100%' }}>
+    <Alert severity='info' sx={{ width: '100%' }}>
       There are no Artists here!
     </Alert>
   );
 
   if (isFetching) {
-    content = <CircularProgress />;
+    content = (
+      <Grid container size={12} direction='column' alignItems='center' justifyContent='center' spacing={2}>
+        <CircularProgress />
+      </Grid>
+    );
   } else if (artists.length > 0) {
     content = artists.map((artist) => {
       if (artist.isPublished) {
@@ -54,23 +58,22 @@ const Artists = () => {
             isPublished={artist.isPublished}
             user={user}
           />
-        )
+        );
       }
     });
   }
 
   return (
-    <Grid container spacing={2}>
-      <Grid container direction="column" spacing={2}>
-        <Grid container justifyContent="space-between" alignItems="center">
+    <Grid container direction='column' spacing={2}>
+      <Grid container direction='column' spacing={2}>
+        <Grid container justifyContent='space-between' alignItems='center'>
           <Grid>
-            <Typography variant="h4">Artists</Typography>
+            <Typography variant='h4'>Artists</Typography>
           </Grid>
         </Grid>
-        <Grid container spacing={5} justifyContent="center">
-          {isFetching && <CircularProgress />}
-          {content}
-        </Grid>
+      </Grid>
+      <Grid container spacing={5} justifyContent='center'>
+        {content}
       </Grid>
     </Grid>
   );
