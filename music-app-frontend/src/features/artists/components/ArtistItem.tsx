@@ -24,7 +24,7 @@ interface Props {
   description: string | null;
   photo: string | null;
   isPublished: boolean;
-  user?: User;
+  user: User | null;
 }
 
 const ArtistItem: React.FC<Props> = ({ id, name, photo, isPublished, user }) => {

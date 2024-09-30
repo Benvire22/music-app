@@ -22,7 +22,7 @@ interface Props {
   releaseDate: number;
   image: string | null;
   isPublished: boolean;
-  user?: User;
+  user: User | null;
   handleToggle?: VoidFunction;
   handleDelete?: VoidFunction;
 }
@@ -46,43 +46,43 @@ const AlbumItem: React.FC<Props> = ({
   }
 
   return (
-    <Grid sx={{ width: '45%' }}>
-      <Card sx={{ height: '100%' }}>
-        <CardHeader title={name} />
-        <ImageCardMedia image={cardImage} title={name} />
+    <Grid sx={{width: '45%'}}>
+      <Card sx={{height: '100%'}}>
+        <CardHeader title={name}/>
+        <ImageCardMedia image={cardImage} title={name}/>
         <CardContent>
           {!isPublished && (
-            <Typography variant='h5' component="span" color='gray'>Not published </Typography>
+            <Typography variant="h5" component="span" color="gray">Not published </Typography>
           )}
           <strong>{releaseDate}</strong>
         </CardContent>
         <CardActions>
           {user?.role === 'admin' && !isPublished && (
             <LoadingButton
-              type='button'
+              type="button"
               onClick={handleToggle}
-              color='primary'
+              color="primary"
               loading={isPublishing}
-              loadingPosition='end'
-              endIcon={<ArrowForwardIcon />}
-              variant='contained'
+              loadingPosition="end"
+              endIcon={<ArrowForwardIcon/>}
+              variant="contained"
             >
               <span>Publish</span>
             </LoadingButton>
           )}
-          <IconButton sx={{ borderRadius: '5%' }} component={Link} to={`/albums/${id}`}>
+          <IconButton sx={{borderRadius: '5%'}} component={Link} to={`/albums/${id}`}>
             подробнее
-            <ArrowForwardIcon />
+            <ArrowForwardIcon/>
           </IconButton>
           {user?.role === 'admin' && (
             <LoadingButton
-              type='button'
+              type="button"
               onClick={handleDelete}
-              color='error'
+              color="error"
               loading={isDeleting}
-              loadingPosition='end'
-              endIcon={<DeleteForeverIcon />}
-              variant='contained'
+              loadingPosition="end"
+              endIcon={<DeleteForeverIcon/>}
+              variant="contained"
             >
               <span>delete</span>
             </LoadingButton>

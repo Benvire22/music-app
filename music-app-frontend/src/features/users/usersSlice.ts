@@ -1,4 +1,4 @@
-import { createSlice, Draft } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { GlobalError, User, ValidationError } from '../../types';
 import { login, register } from './usersThunks';
 
@@ -18,9 +18,7 @@ const initialState: UsersState = {
   loginError: null,
 };
 
-export const usersSlice = createSlice<UsersState, {
-  unsetUser: (state: Draft<UsersState>) => void;
-}>({
+export const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {

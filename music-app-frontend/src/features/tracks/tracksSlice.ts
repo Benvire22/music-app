@@ -28,7 +28,7 @@ export const initialState: TracksState = {
   isDeleting: false,
 };
 
-export const tracksSlice = createSlice<TracksState>({
+export const tracksSlice = createSlice({
   name: 'tracks',
   initialState,
   reducers: {},

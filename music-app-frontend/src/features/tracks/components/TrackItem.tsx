@@ -15,7 +15,7 @@ interface Props {
   number: number;
   length: string;
   isPublished: boolean;
-  user?: User;
+  user: User | null;
   handleToggle?: VoidFunction;
   handleDelete?: VoidFunction;
 }

@@ -49,6 +49,7 @@ export const togglePublished = createAsyncThunk<void, string>('artists/togglePub
   try {
     await axiosApi.patch(`/artists/${artistId}/togglePublished`);
   } catch (e) {
+    console.error(e);
     throw e;
   }
 });
@@ -57,6 +58,7 @@ export const deleteArtist = createAsyncThunk<void, string>('artists/delete', asy
   try {
     await axiosApi.delete(`/artists/${artistId}`);
   } catch (e) {
+    console.error(e);
     throw e;
   }
 });

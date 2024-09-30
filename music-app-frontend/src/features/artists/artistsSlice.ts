@@ -26,7 +26,7 @@ export const initialState: ArtistsState = {
   isDeleting: false,
 };
 
-export const artistsSlice = createSlice<ArtistsState>({
+export const artistsSlice = createSlice({
   name: 'artists',
   initialState,
   reducers: {},

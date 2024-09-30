@@ -1,4 +1,3 @@
-import React from 'react';
 import ArtistForm from './components/ArtistForm';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectCreatingArtist } from './artistsSlice';

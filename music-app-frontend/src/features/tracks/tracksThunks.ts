@@ -81,6 +81,7 @@ export const togglePublishedTrack = createAsyncThunk<void, string>('tracks/toggl
   try {
     await axiosApi.patch(`/tracks/${trackId}/togglePublished`);
   } catch (e) {
+    console.error(e);
     throw e;
   }
 });
@@ -89,6 +90,7 @@ export const deleteTrack = createAsyncThunk<void, string>('tracks/delete', async
   try {
     await axiosApi.delete(`/tracks/${trackId}`);
   } catch (e) {
+    console.error(e);
     throw e;
   }
 });

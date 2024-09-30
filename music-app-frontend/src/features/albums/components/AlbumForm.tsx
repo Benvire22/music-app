@@ -37,7 +37,6 @@ const AlbumForm: React.FC<Props> = ({ onSubmit, isLoading }) => {
 
   const submitFormHandler = (event: React.FormEvent) => {
     event.preventDefault();
-
     onSubmit({ ...state });
   };
 
@@ -100,7 +99,6 @@ const AlbumForm: React.FC<Props> = ({ onSubmit, isLoading }) => {
         <TextField
           required
           type='number'
-          min='0'
           label='Release date'
           id='releaseDate'
           name='releaseDate'

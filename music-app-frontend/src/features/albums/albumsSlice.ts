@@ -26,7 +26,7 @@ export const initialState: AlbumState = {
   isDeleting: false,
 };
 
-export const albumsSlice = createSlice<AlbumState>({
+export const albumsSlice = createSlice({
   name: 'albums',
   initialState,
   reducers: {},

@@ -126,7 +126,6 @@ const TrackForm: React.FC<Props> = ({ onSubmit, isLoading }) => {
         <TextField
           required
           type='text'
-          min='0'
           label='length'
           id='length'
           name='length'
@@ -138,7 +137,6 @@ const TrackForm: React.FC<Props> = ({ onSubmit, isLoading }) => {
         <TextField
           required
           type='number'
-          min='0'
           label='Number in album'
           id='number'
           name='number'
