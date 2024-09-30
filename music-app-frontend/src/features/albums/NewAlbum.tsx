@@ -22,7 +22,7 @@ const NewAlbum = () => {
 
   return (
     <>
-      <Typography variant='h4' sx={{ mb: 2 }}>New Album</Typography>
+      <Typography variant="h4" sx={{ mb: 2 }}>New Album</Typography>
       <AlbumForm
         onSubmit={onFormSubmit}
         isLoading={isCreating}

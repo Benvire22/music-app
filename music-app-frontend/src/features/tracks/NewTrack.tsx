@@ -22,7 +22,7 @@ const NewTrack = () => {
 
   return (
     <>
-      <Typography variant='h4' sx={{ mb: 2 }}>New Track</Typography>
+      <Typography variant="h4" sx={{ mb: 2 }}>New Track</Typography>
       <TrackForm
         onSubmit={onFormSubmit}
         isLoading={isCreating}

@@ -7,7 +7,7 @@ import { LoadingButton } from '@mui/lab';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { User } from '../../../types';
-import { selectPublishingTrack } from '../tracksSlice';
+import { selectDeletingTrack, selectPublishingTrack } from '../tracksSlice';
 
 interface Props {
   id: string;
@@ -23,7 +23,7 @@ interface Props {
 const TrackItem: React.FC<Props> = ({ id, name, number, length, isPublished, user, handleToggle, handleDelete }) => {
   const dispatch = useAppDispatch();
   const isPublishing = useAppSelector(selectPublishingTrack);
-  const isDeleting = useAppSelector(selectPublishingTrack);
+  const isDeleting = useAppSelector(selectDeletingTrack);
 
   const playTrack = async () => {
     try {
@@ -37,42 +37,42 @@ const TrackItem: React.FC<Props> = ({ id, name, number, length, isPublished, use
     <Grid sx={{ width: '100%' }}>
       <Card sx={{ border: '2px solid lightblue', p: '10px' }}>
         <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Typography variant='h5'>
-            #{number}. {user && (<Button variant='contained' onClick={playTrack}> play</Button>)}
+          <Typography variant="h5">
+            #{number}. {user && (<Button variant="contained" onClick={playTrack}> play</Button>)}
           </Typography>
-          <Typography component={Grid} justifyContent='center' textAlign='center'>
-            <Typography variant='h5' marginBottom='10px'>
+          <Typography component={Grid} justifyContent="center" textAlign="center">
+            <Typography variant="h5" marginBottom="10px">
               {name}
             </Typography>
             {user?.role === 'admin' && !isPublished && (
               <LoadingButton
-                type='button'
+                type="button"
                 onClick={handleToggle}
-                color='primary'
+                color="primary"
                 sx={{ mr: 2 }}
                 loading={isPublishing}
-                loadingPosition='end'
+                loadingPosition="end"
                 endIcon={<ArrowForwardIcon />}
-                variant='contained'
+                variant="contained"
               >
                 <span>Publish</span>
               </LoadingButton>
             )}
             {user?.role === 'admin' && (
               <LoadingButton
-                type='button'
+                type="button"
                 onClick={handleDelete}
-                color='error'
+                color="error"
                 loading={isDeleting}
-                loadingPosition='end'
+                loadingPosition="end"
                 endIcon={<DeleteForeverIcon />}
-                variant='contained'
+                variant="contained"
               >
                 <span>delete</span>
               </LoadingButton>
             )}
           </Typography>
-          <Typography variant='h5'>{length}</Typography>
+          <Typography variant="h5">{length}</Typography>
         </CardContent>
 
       </Card>

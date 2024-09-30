@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
-import { Avatar, Box, Button, TextField, Typography, Link, Alert } from '@mui/material';
+import { Avatar, Box, TextField, Typography, Link, Alert } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { selectLoginError } from './usersSlice';
+import { selectLoginError, selectLoginLoading } from './usersSlice';
+import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import { LoginMutation } from '../../types';
 import { login } from './usersThunks';
+import { LoadingButton } from '@mui/lab';
 
 const Login = () => {
   const dispatch = useAppDispatch();
+  const loginLoading = useAppSelector(selectLoginLoading);
   const error = useAppSelector(selectLoginError);
   const navigate = useNavigate();
   const [state, setState] = useState<LoginMutation>({
@@ -79,16 +82,18 @@ const Login = () => {
             />
           </Grid>
         </Grid>
-        <Button
+        <LoadingButton
           type="submit"
           fullWidth
-          variant="contained"
           sx={{ mt: 3, mb: 2 }}
           color="primary"
-          onClick={submitFormHandler}
+          loading={loginLoading}
+          loadingPosition="start"
+          startIcon={<MeetingRoomIcon />}
+          variant="contained"
         >
-          Sign in
-        </Button>
+          <span>Sign in</span>
+        </LoadingButton>
         <Link component={RouterLink} to={'/register'} variant="body2">
           Or sign up
         </Link>

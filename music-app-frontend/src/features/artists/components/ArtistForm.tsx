@@ -46,17 +46,17 @@ const ArtistForm: React.FC<Props> = ({ onSubmit, isLoading }) => {
   };
 
   return (
-    <Grid container direction='column' spacing={2} component='form' onSubmit={submitFormHandler}>
+    <Grid container direction="column" spacing={2} component="form" onSubmit={submitFormHandler}>
       {error && (
-        <Alert severity='error' sx={{ mt: 3 }}>
+        <Alert severity="error" sx={{ mt: 3 }}>
           {error.error}
         </Alert>
       )}
       <Grid>
         <TextField
-          label='Artist name'
-          id='name'
-          name='name'
+          label="Artist name"
+          id="name"
+          name="name"
           value={state.name}
           onChange={inputChangeHandler}
         />
@@ -65,27 +65,27 @@ const ArtistForm: React.FC<Props> = ({ onSubmit, isLoading }) => {
         <TextField
           multiline
           minRows={4}
-          label='Description'
-          id='description'
-          name='description'
+          label="Description"
+          id="description"
+          name="description"
           value={state.description}
           onChange={inputChangeHandler}
         />
       </Grid>
       <Grid>
         <FileInput
-          label='Photo'
-          name='photo'
+          label="Photo"
+          name="photo"
           onChange={fileInputChangeHandler}
         />
       </Grid>
       <Grid>
         <LoadingButton
-          type='submit'
+          type="submit"
           loading={isLoading}
-          loadingPosition='start'
+          loadingPosition="start"
           startIcon={<SaveIcon />}
-          variant='contained'
+          variant="contained"
         >
           <span>Save</span>
         </LoadingButton>

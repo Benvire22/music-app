@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import { Container, Typography } from '@mui/material';
 import AppToolbar from './UI/AppToolbar/AppToolbar';
 import OneArtist from './features/artists/OneArtist';
-import OneAlbum from './features/artists/OneAlbum';
+import OneAlbum from './features/albums/OneAlbum';
 import Artists from './features/artists/Artists';
 import Register from './features/users/Register';
 import Login from './features/users/Login';

@@ -48,14 +48,14 @@ const OneArtist: React.FC = () => {
   };
 
   let content: React.ReactNode = (
-    <Alert severity='info' sx={{ width: '100%' }}>
+    <Alert severity="info" sx={{ width: '100%' }}>
       There are no tracks here!
     </Alert>
   );
 
   if (albumsLoading) {
     content = (
-      <Grid container size={12} direction='column' alignItems='center' justifyContent='center' spacing={2}>
+      <Grid container size={12} direction="column" alignItems="center" justifyContent="center" spacing={2}>
         <CircularProgress />
       </Grid>
     );
@@ -93,14 +93,14 @@ const OneArtist: React.FC = () => {
   }
 
   return (
-    <Grid container direction='column' spacing={3}>
+    <Grid container direction="column" spacing={3}>
       <Grid>
-        <Grid container justifyContent='space-between' marginBottom='50px' alignItems='center'>
+        <Grid container justifyContent="space-between" marginBottom="50px" alignItems="center">
           <Grid>
-            <Typography variant='h4'>{artist?.name || (isFetching && <CircularProgress />)}</Typography>
+            <Typography variant="h4">{artist?.name || (isFetching && <CircularProgress />)}</Typography>
           </Grid>
         </Grid>
-        <Button variant='text' startIcon={<ArrowBackIcon />} component={Link} to='/'>
+        <Button variant="text" startIcon={<ArrowBackIcon />} component={Link} to="/">
           Back to all Artists
         </Button>
       </Grid>

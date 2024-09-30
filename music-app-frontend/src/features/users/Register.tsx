@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
-import { Avatar, Box, Button, TextField, Typography, Link } from '@mui/material';
+import { Avatar, Box, TextField, Typography, Link } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { selectRegisterError } from './usersSlice';
+import { selectRegisterError, selectRegisterLoading } from './usersSlice';
 import { RegisterMutation } from '../../types';
 import { register } from './usersThunks';
+import { LoadingButton } from '@mui/lab';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 const Register = () => {
   const dispatch = useAppDispatch();
+  const registerLoading = useAppSelector(selectRegisterLoading);
   const navigate = useNavigate();
   const error = useAppSelector(selectRegisterError);
 
@@ -87,16 +90,18 @@ const Register = () => {
             />
           </Grid>
         </Grid>
-        <Button
+        <LoadingButton
           type="submit"
           fullWidth
-          variant="contained"
           sx={{ mt: 3, mb: 2 }}
           color="primary"
-          onClick={submitFormHandler}
+          loading={registerLoading}
+          loadingPosition="end"
+          endIcon={<ExitToAppIcon />}
+          variant="contained"
         >
-          Sign up
-        </Button>
+          <span>Sign up</span>
+        </LoadingButton>
         <Link component={RouterLink} to={'/login'} variant="body2">
           Already have an component account? Sign in
         </Link>

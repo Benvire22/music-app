@@ -36,7 +36,7 @@ export const artistsSlice = createSlice({
         state.fetchingArtists = true;
         state.errorFetchingArtists = false;
       })
-      .addCase(fetchArtists.fulfilled, (state, { payload: artists }) => {
+      .addCase(fetchArtists.fulfilled, (state, {payload: artists}) => {
         state.artists = artists;
         state.fetchingArtists = false;
       })
@@ -51,7 +51,7 @@ export const artistsSlice = createSlice({
         state.fetchOneArtist = true;
         state.errorFetchingArtists = false;
       })
-      .addCase(fetchOneArtist.fulfilled, (state, { payload: artist }) => {
+      .addCase(fetchOneArtist.fulfilled, (state, {payload: artist}) => {
         state.oneArtist = artist;
         state.fetchOneArtist = false;
       })

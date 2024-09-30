@@ -58,7 +58,7 @@ const ArtistItem: React.FC<Props> = ({ id, name, photo, isPublished, user }) => 
   return (
     <Grid sx={{ width: '100%', margin: '20px 0 0 60px' }}>
       {!isPublished && (
-        <Typography variant='h5' color='#ccc'>Not published</Typography>
+        <Typography variant="h5" color="#ccc">Not published</Typography>
       )}
       <Card sx={{ display: 'flex', p: 2 }}>
         <ImageCardMedia image={cardImage} title={name} />
@@ -66,28 +66,28 @@ const ArtistItem: React.FC<Props> = ({ id, name, photo, isPublished, user }) => 
         <CardActions sx={{ marginLeft: 'auto' }}>
           {user?.role === 'admin' && !isPublished && (
             <LoadingButton
-              type='button'
+              type="button"
               onClick={handleToggle}
               fullWidth
-              color='primary'
+              color="primary"
               loading={isPublishing}
-              loadingPosition='end'
+              loadingPosition="end"
               endIcon={<ArrowForwardIcon />}
-              variant='contained'
+              variant="contained"
             >
               <span>Publish</span>
             </LoadingButton>
           )}
           {user?.role === 'admin' && (
             <LoadingButton
-              type='button'
+              type="button"
               onClick={handleDelete}
               fullWidth
-              color='error'
+              color="error"
               loading={isDeleting}
-              loadingPosition='end'
+              loadingPosition="end"
               endIcon={<DeleteForeverIcon />}
-              variant='contained'
+              variant="contained"
             >
               <span>delete</span>
             </LoadingButton>

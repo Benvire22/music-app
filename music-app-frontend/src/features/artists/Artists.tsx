@@ -22,14 +22,14 @@ const Artists = () => {
   }, [dispatch]);
 
   let content: React.ReactNode = (
-    <Alert severity='info' sx={{ width: '100%' }}>
+    <Alert severity="info" sx={{ width: '100%' }}>
       There are no Artists here!
     </Alert>
   );
 
   if (isFetching) {
     content = (
-      <Grid container size={12} direction='column' alignItems='center' justifyContent='center' spacing={2}>
+      <Grid container size={12} direction="column" alignItems="center" justifyContent="center" spacing={2}>
         <CircularProgress />
       </Grid>
     );
@@ -64,15 +64,15 @@ const Artists = () => {
   }
 
   return (
-    <Grid container direction='column' spacing={2}>
-      <Grid container direction='column' spacing={2}>
-        <Grid container justifyContent='space-between' alignItems='center'>
+    <Grid container direction="column" spacing={2}>
+      <Grid container direction="column" spacing={2}>
+        <Grid container justifyContent="space-between" alignItems="center">
           <Grid>
-            <Typography variant='h4'>Artists</Typography>
+            <Typography variant="h4">Artists</Typography>
           </Grid>
         </Grid>
       </Grid>
-      <Grid container spacing={5} justifyContent='center'>
+      <Grid container spacing={5} justifyContent="center">
         {content}
       </Grid>
     </Grid>

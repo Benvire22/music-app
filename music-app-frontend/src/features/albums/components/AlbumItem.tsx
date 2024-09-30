@@ -46,10 +46,10 @@ const AlbumItem: React.FC<Props> = ({
   }
 
   return (
-    <Grid sx={{width: '45%'}}>
-      <Card sx={{height: '100%'}}>
-        <CardHeader title={name}/>
-        <ImageCardMedia image={cardImage} title={name}/>
+    <Grid sx={{ width: '45%' }}>
+      <Card sx={{ height: '100%' }}>
+        <CardHeader title={name} />
+        <ImageCardMedia image={cardImage} title={name} />
         <CardContent>
           {!isPublished && (
             <Typography variant="h5" component="span" color="gray">Not published </Typography>
@@ -64,15 +64,15 @@ const AlbumItem: React.FC<Props> = ({
               color="primary"
               loading={isPublishing}
               loadingPosition="end"
-              endIcon={<ArrowForwardIcon/>}
+              endIcon={<ArrowForwardIcon />}
               variant="contained"
             >
               <span>Publish</span>
             </LoadingButton>
           )}
-          <IconButton sx={{borderRadius: '5%'}} component={Link} to={`/albums/${id}`}>
+          <IconButton sx={{ borderRadius: '5%' }} component={Link} to={`/albums/${id}`}>
             подробнее
-            <ArrowForwardIcon/>
+            <ArrowForwardIcon />
           </IconButton>
           {user?.role === 'admin' && (
             <LoadingButton
@@ -81,7 +81,7 @@ const AlbumItem: React.FC<Props> = ({
               color="error"
               loading={isDeleting}
               loadingPosition="end"
-              endIcon={<DeleteForeverIcon/>}
+              endIcon={<DeleteForeverIcon />}
               variant="contained"
             >
               <span>delete</span>

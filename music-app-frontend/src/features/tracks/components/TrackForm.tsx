@@ -63,18 +63,18 @@ const TrackForm: React.FC<Props> = ({ onSubmit, isLoading }) => {
   };
 
   return (
-    <Grid container direction='column' spacing={2} component='form' onSubmit={submitFormHandler}>
+    <Grid container direction="column" spacing={2} component="form" onSubmit={submitFormHandler}>
       {error && (
-        <Alert severity='error' sx={{ mt: 3 }}>
+        <Alert severity="error" sx={{ mt: 3 }}>
           {error.error}
         </Alert>
       )}
       <Grid>
         <TextField
           required
-          label='Track title'
-          id='name'
-          name='name'
+          label="Track title"
+          id="name"
+          name="name"
           value={state.name}
           onChange={inputChangeHandler}
         />
@@ -83,13 +83,13 @@ const TrackForm: React.FC<Props> = ({ onSubmit, isLoading }) => {
         <TextField
           required
           select
-          label='Artist'
-          id='artist'
-          name='artist'
+          label="Artist"
+          id="artist"
+          name="artist"
           value={state.artist}
           onChange={inputChangeHandler}
         >
-          <MenuItem value='' disabled>
+          <MenuItem value="" disabled>
             Select artist
           </MenuItem>
           {artists.map((artist) => (
@@ -106,13 +106,13 @@ const TrackForm: React.FC<Props> = ({ onSubmit, isLoading }) => {
         <TextField
           required
           select
-          label='Album'
-          id='album'
-          name='album'
+          label="Album"
+          id="album"
+          name="album"
           value={state.album}
           onChange={inputChangeHandler}
         >
-          <MenuItem value='' disabled>
+          <MenuItem value="" disabled>
             Select artist
           </MenuItem>
           {albums.map((album) => (
@@ -125,10 +125,10 @@ const TrackForm: React.FC<Props> = ({ onSubmit, isLoading }) => {
       <Grid>
         <TextField
           required
-          type='text'
-          label='length'
-          id='length'
-          name='length'
+          type="text"
+          label="length"
+          id="length"
+          name="length"
           value={state.length}
           onChange={inputChangeHandler}
         />
@@ -136,21 +136,21 @@ const TrackForm: React.FC<Props> = ({ onSubmit, isLoading }) => {
       <Grid>
         <TextField
           required
-          type='number'
-          label='Number in album'
-          id='number'
-          name='number'
+          type="number"
+          label="Number in album"
+          id="number"
+          name="number"
           value={state.number}
           onChange={inputChangeHandler}
         />
       </Grid>
       <Grid>
         <LoadingButton
-          type='submit'
+          type="submit"
           loading={isLoading}
-          loadingPosition='start'
+          loadingPosition="start"
           startIcon={<SaveIcon />}
-          variant='contained'
+          variant="contained"
         >
           <span>Save</span>
         </LoadingButton>

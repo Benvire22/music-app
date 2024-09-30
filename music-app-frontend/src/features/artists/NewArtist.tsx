@@ -22,7 +22,7 @@ const NewArtist = () => {
 
   return (
     <>
-      <Typography variant='h4' sx={{ mb: 2 }}>New Artist</Typography>
+      <Typography variant="h4" sx={{ mb: 2 }}>New Artist</Typography>
       <ArtistForm
         onSubmit={onFormSubmit}
         isLoading={isCreating}

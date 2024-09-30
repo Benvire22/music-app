@@ -59,18 +59,18 @@ const AlbumForm: React.FC<Props> = ({ onSubmit, isLoading }) => {
   };
 
   return (
-    <Grid container direction='column' spacing={2} component='form' onSubmit={submitFormHandler}>
+    <Grid container direction="column" spacing={2} component="form" onSubmit={submitFormHandler}>
       {error && (
-        <Alert severity='error' sx={{ mt: 3 }}>
+        <Alert severity="error" sx={{ mt: 3 }}>
           {error.error}
         </Alert>
       )}
       <Grid>
         <TextField
           required
-          label='Album title'
-          id='name'
-          name='name'
+          label="Album title"
+          id="name"
+          name="name"
           value={state.name}
           onChange={inputChangeHandler}
         />
@@ -79,13 +79,13 @@ const AlbumForm: React.FC<Props> = ({ onSubmit, isLoading }) => {
         <TextField
           required
           select
-          label='Artist'
-          id='artist'
-          name='artist'
+          label="Artist"
+          id="artist"
+          name="artist"
           value={state.artist}
           onChange={inputChangeHandler}
         >
-          <MenuItem value='' disabled>
+          <MenuItem value="" disabled>
             Select artist
           </MenuItem>
           {artists.map((artist) => (
@@ -98,28 +98,28 @@ const AlbumForm: React.FC<Props> = ({ onSubmit, isLoading }) => {
       <Grid>
         <TextField
           required
-          type='number'
-          label='Release date'
-          id='releaseDate'
-          name='releaseDate'
+          type="number"
+          label="Release date"
+          id="releaseDate"
+          name="releaseDate"
           value={state.releaseDate}
           onChange={inputChangeHandler}
         />
       </Grid>
       <Grid>
         <FileInput
-          label='Image'
-          name='image'
+          label="Image"
+          name="image"
           onChange={fileInputChangeHandler}
         />
       </Grid>
       <Grid>
         <LoadingButton
-          type='submit'
+          type="submit"
           loading={isLoading}
-          loadingPosition='start'
+          loadingPosition="start"
           startIcon={<SaveIcon />}
-          variant='contained'
+          variant="contained"
         >
           <span>Save</span>
         </LoadingButton>

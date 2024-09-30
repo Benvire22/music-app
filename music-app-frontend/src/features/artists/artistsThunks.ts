@@ -4,7 +4,7 @@ import axiosApi from '../../axiosApi';
 import { isAxiosError } from 'axios';
 
 export const fetchArtists = createAsyncThunk<Artist[]>('artists/fetchArtists', async () => {
-  const { data: artists } = await axiosApi.get<Artist[]>('/artists');
+  const {data: artists} = await axiosApi.get<Artist[]>('/artists');
 
   if (!artists) {
     return [];
@@ -14,7 +14,7 @@ export const fetchArtists = createAsyncThunk<Artist[]>('artists/fetchArtists', a
 });
 
 export const fetchOneArtist = createAsyncThunk<Artist | null, string>('artists/fetchOneArtist', async (artistId) => {
-  const { data: artist } = await axiosApi.get<Artist>(`/artists/${artistId}`);
+  const {data: artist} = await axiosApi.get<Artist>(`/artists/${artistId}`);
 
   if (!artist) {
     return null;
@@ -23,7 +23,9 @@ export const fetchOneArtist = createAsyncThunk<Artist | null, string>('artists/f
   return artist;
 });
 
-export const createArtist = createAsyncThunk<void, ArtistMutation, { rejectValue: GlobalError }>('artists/create', async (artistMutation, { rejectWithValue }) => {
+export const createArtist = createAsyncThunk<void, ArtistMutation, {
+  rejectValue: GlobalError
+}>('artists/create', async (artistMutation, {rejectWithValue}) => {
   try {
     const formData = new FormData();
 
