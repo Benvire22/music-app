@@ -7,8 +7,9 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectLoginError, selectLoginLoading } from './usersSlice';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import { LoginMutation } from '../../types';
-import { login } from './usersThunks';
+import { googleLogin, login } from './usersThunks';
 import { LoadingButton } from '@mui/lab';
+import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
 
 const Login = () => {
   const dispatch = useAppDispatch();
@@ -38,6 +39,18 @@ const Login = () => {
     }
   };
 
+  const googleLoginHandler = async (credentialResponse: CredentialResponse) => {
+    try {
+      if (credentialResponse.credential) {
+        await dispatch(googleLogin(credentialResponse.credential)).unwrap();
+      }
+      navigate('/');
+
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -58,6 +71,14 @@ const Login = () => {
           {error.error}
         </Alert>
       )}
+      <Box>
+        <GoogleLogin
+          onSuccess={googleLoginHandler}
+          onError={() => {
+            console.error('Login Failed!');
+          }}
+        />
+      </Box>
       <Box component="form" noValidate onSubmit={submitFormHandler} sx={{ mt: 3 }}>
         <Grid container direction="column" spacing={2}>
           <Grid>
