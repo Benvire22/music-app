@@ -16,51 +16,61 @@ export const fetchAlbums = createAsyncThunk<Album[], string>('artists/fetchAlbum
 export const fetchOneAlbum = createAsyncThunk<Album | null, string>(
   'artists/fetchOneAlbum',
   async (artistId) => {
-  const { data: album } = await axiosApi.get<Album>(`/albums/${artistId}`);
+    const { data: album } = await axiosApi.get<Album>(`/albums/${artistId}`);
 
-  if (!album) {
-    return null;
-  }
-
-  return album;
-});
-
-export const createAlbum = createAsyncThunk<void, AlbumMutation, { rejectValue: GlobalError }>('albums/create', async (albumMutation, { rejectWithValue }) => {
-  try {
-    const formData = new FormData();
-
-    const keys = Object.keys(albumMutation) as (keyof AlbumMutation)[];
-    keys.forEach((key) => {
-      const value = albumMutation[key];
-      if (value !== null) {
-        formData.append(key, value);
-      }
-    });
-
-    await axiosApi.post(`/albums/`, formData);
-  } catch (e) {
-    if (isAxiosError(e) && e.response && e.response.status === 400) {
-      return rejectWithValue(e.response.data);
+    if (!album) {
+      return null;
     }
 
-    throw e;
-  }
-});
+    return album;
+  },
+);
 
-export const togglePublishedAlbum = createAsyncThunk<void, string>('album/togglePublished', async (albumId) => {
-  try {
-    await axiosApi.patch(`/albums/${albumId}/togglePublished`);
-  } catch (e) {
-    console.error(e);
-    throw e;
-  }
-});
+export const createAlbum = createAsyncThunk<void, AlbumMutation, { rejectValue: GlobalError }>(
+  'albums/create',
+  async (albumMutation, { rejectWithValue }) => {
+    try {
+      const formData = new FormData();
 
-export const deleteAlbum = createAsyncThunk<void, string>('album/delete', async (albumId) => {
-  try {
-    await axiosApi.delete(`/albums/${albumId}`);
-  } catch (e) {
-    console.error(e);
-    throw e;
-  }
-});
+      const keys = Object.keys(albumMutation) as (keyof AlbumMutation)[];
+      keys.forEach((key) => {
+        const value = albumMutation[key];
+        if (value !== null) {
+          formData.append(key, value);
+        }
+      });
+
+      await axiosApi.post(`/albums/`, formData);
+    } catch (e) {
+      if (isAxiosError(e) && e.response && e.response.status === 400) {
+        return rejectWithValue(e.response.data);
+      }
+
+      throw e;
+    }
+  },
+);
+
+export const togglePublishedAlbum = createAsyncThunk<void, string>(
+  'album/togglePublished',
+  async (albumId) => {
+    try {
+      await axiosApi.patch(`/albums/${albumId}/togglePublished`);
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
+  },
+);
+
+export const deleteAlbum = createAsyncThunk<void, string>(
+  'album/delete',
+  async (albumId) => {
+    try {
+      await axiosApi.delete(`/albums/${albumId}`);
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
+  },
+);

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import Grid from '@mui/material/Grid2';
-import { Button, Menu, MenuItem } from '@mui/material';
+import { Avatar, Button, Menu, MenuItem } from '@mui/material';
 import { User } from '../../types';
 import { NavLink } from 'react-router-dom';
 import { useAppDispatch } from '../../app/hooks';
 import { logout } from '../../features/users/usersThunks';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 interface Props {
   user: User;
@@ -36,6 +37,11 @@ const UserMenu: React.FC<Props> = ({ user }) => {
       </Button>
       <Button color='inherit' sx={{ ml: 10, textTransform: 'none' }} onClick={handleClick}>
         {user.displayName ? user.displayName : user.username}
+        {user.avatar ? (
+          <Avatar sx={{ ml: 2}} src={user.avatar} alt={user.displayName} />
+        ) : (
+          <Avatar sx={{ ml: 2}} ><AccountCircleIcon /></Avatar>
+        )}
       </Button>
       <Menu open={isOpen} onClose={handleClose} anchorEl={anchorEl} keepMounted>
         <MenuItem onClick={handleClose} component={NavLink} to='/tracks_history'>

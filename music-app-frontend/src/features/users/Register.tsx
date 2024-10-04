@@ -9,6 +9,7 @@ import { RegisterMutation } from '../../types';
 import { register } from './usersThunks';
 import { LoadingButton } from '@mui/lab';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import FileInput from '../../UI/FileInput/FileInput';
 
 const Register = () => {
   const dispatch = useAppDispatch();
@@ -19,6 +20,8 @@ const Register = () => {
   const [state, setState] = useState<RegisterMutation>({
     username: '',
     password: '',
+    displayName: '',
+    avatar: null,
   });
 
   const getFieldError = (fieldName: string) => {
@@ -33,15 +36,29 @@ const Register = () => {
     }));
   };
 
+  const fileInputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, files } = event.target;
+    const value = files && files[0] ? files[0] : null;
+
+    setState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
   const submitFormHandler = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
       await dispatch(register(state)).unwrap();
       navigate('/');
+
       setState({
         username: '',
         password: '',
+        displayName: '',
+        avatar: null,
       });
+
     } catch (e) {
       console.error(e);
     }
@@ -87,6 +104,24 @@ const Register = () => {
               required
               error={Boolean(getFieldError('password'))}
               helperText={getFieldError('password')}
+            />
+          </Grid>
+          <Grid>
+            <TextField
+              label="Display name"
+              name="displayName"
+              value={state.displayName}
+              onChange={inputChangeHandler}
+              required
+              error={Boolean(getFieldError('displayName'))}
+              helperText={getFieldError('displayName')}
+            />
+          </Grid>
+          <Grid>
+            <FileInput
+              label="Avatar"
+              name="avatar"
+              onChange={fileInputChangeHandler}
             />
           </Grid>
         </Grid>

@@ -37,7 +37,11 @@ const UserSchema = new Schema<UserFields, UserModel, UserMethods>({
     default: 'user',
     enum: ['user', 'admin'],
   },
-  displayName: String,
+  displayName: {
+    type: String,
+    required: true,
+  },
+  avatar: String,
   googleID: String,
 });
 

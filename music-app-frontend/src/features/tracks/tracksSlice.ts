@@ -38,7 +38,7 @@ export const tracksSlice = createSlice({
         state.fetchingTracks = true;
         state.errorFetchingTracks = false;
       })
-      .addCase(fetchTracks.fulfilled, (state, {payload: tracks}) => {
+      .addCase(fetchTracks.fulfilled, (state, { payload: tracks }) => {
         state.fetchingTracks = false;
         state.tracks = tracks;
       })
@@ -52,7 +52,7 @@ export const tracksSlice = createSlice({
         state.fetchLoadingHistoryTracks = true;
         state.errorFetchingTracks = false;
       })
-      .addCase(fetchHistoryTracks.fulfilled, (state, {payload: tracks}) => {
+      .addCase(fetchHistoryTracks.fulfilled, (state, { payload: tracks }) => {
         state.fetchLoadingHistoryTracks = false;
         state.trackHistory = tracks;
       })
@@ -69,7 +69,7 @@ export const tracksSlice = createSlice({
       .addCase(createTrack.fulfilled, (state) => {
         state.isCreating = false;
       })
-      .addCase(createTrack.rejected, (state, {payload: error}) => {
+      .addCase(createTrack.rejected, (state, { payload: error }) => {
         state.isCreating = false;
         state.errorCreating = error || null;
       });

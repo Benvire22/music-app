@@ -3,10 +3,11 @@ import mongoose, { Model } from 'mongoose';
 export interface UserFields {
   username: string;
   password: string;
+  displayName: string;
   token: string;
   role: string;
-  displayName?: string;
   googleID?: string;
+  avatar: string | null;
 }
 
 export interface ArtistI {

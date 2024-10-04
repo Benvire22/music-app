@@ -32,11 +32,11 @@ export const usersSlice = createSlice({
         state.registerError = null;
         state.registerLoading = true;
       })
-      .addCase(register.fulfilled, (state, {payload: user}) => {
+      .addCase(register.fulfilled, (state, { payload: user }) => {
         state.registerLoading = false;
         state.user = user;
       })
-      .addCase(register.rejected, (state, {payload: error}) => {
+      .addCase(register.rejected, (state, { payload: error }) => {
         state.registerError = error || null;
         state.registerLoading = false;
       });
@@ -46,11 +46,11 @@ export const usersSlice = createSlice({
         state.loginError = null;
         state.loginLoading = true;
       })
-      .addCase(login.fulfilled, (state, {payload: user}) => {
+      .addCase(login.fulfilled, (state, { payload: user }) => {
         state.loginLoading = false;
         state.user = user;
       })
-      .addCase(login.rejected, (state, {payload: error}) => {
+      .addCase(login.rejected, (state, { payload: error }) => {
         state.loginError = error || null;
         state.loginLoading = false;
       });
@@ -60,11 +60,11 @@ export const usersSlice = createSlice({
         state.loginError = null;
         state.loginLoading = true;
       })
-      .addCase(googleLogin.fulfilled, (state, {payload: user}) => {
+      .addCase(googleLogin.fulfilled, (state, { payload: user }) => {
         state.loginLoading = false;
         state.user = user;
       })
-      .addCase(googleLogin.rejected, (state, {payload: error}) => {
+      .addCase(googleLogin.rejected, (state, { payload: error }) => {
         state.loginError = error || null;
         state.loginLoading = false;
       });
@@ -80,12 +80,12 @@ export const usersSlice = createSlice({
 
 export const usersReducer = usersSlice.reducer;
 
-export const {unsetUser} = usersSlice.actions;
+export const { unsetUser } = usersSlice.actions;
 
 export const {
   selectUser,
   selectRegisterLoading,
   selectRegisterError,
   selectLoginLoading,
-  selectLoginError
+  selectLoginError,
 } = usersSlice.selectors;

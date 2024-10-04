@@ -25,7 +25,8 @@ const config = {
   google: {
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  }
+  },
+  apiUrl: 'http://localhost:8000/',
 };
 
 export default config;
