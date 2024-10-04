@@ -19,8 +19,8 @@ const run = async () => {
   await User.create({
     username: 'user',
     password: '123WWW',
+    displayName: 'Grisha',
     token: crypto.randomUUID(),
-    displayName: 'User',
     avatar: null,
     role: 'user',
   }, {
@@ -28,7 +28,7 @@ const run = async () => {
     password: '123321',
     displayName: 'Administrator',
     token: crypto.randomUUID(),
-    avatar: null,
+    avatar: config.apiUrl + 'fixtures/admin-avatar.jpg',
     role: 'admin',
   });
 

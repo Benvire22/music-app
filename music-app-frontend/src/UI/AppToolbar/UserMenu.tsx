@@ -26,25 +26,25 @@ const UserMenu: React.FC<Props> = ({ user }) => {
 
   return (
     <Grid>
-      <Button onClick={handleClose} color='inherit' component={NavLink} to='/artists/new'>
+      <Button onClick={handleClose} color="inherit" component={NavLink} to="/artists/new">
         add Artist
       </Button>
-      <Button onClick={handleClose} color='inherit' component={NavLink} to='/albums/new'>
+      <Button onClick={handleClose} color="inherit" component={NavLink} to="/albums/new">
         new album
       </Button>
-      <Button onClick={handleClose} color='inherit' component={NavLink} to='/tracks/new'>
+      <Button onClick={handleClose} color="inherit" component={NavLink} to="/tracks/new">
         new track
       </Button>
-      <Button color='inherit' sx={{ ml: 10, textTransform: 'none' }} onClick={handleClick}>
+      <Button color="inherit" sx={{ ml: 10, textTransform: 'none' }} onClick={handleClick}>
         {user.displayName ? user.displayName : user.username}
         {user.avatar ? (
-          <Avatar sx={{ ml: 2}} src={user.avatar} alt={user.displayName} />
+          <Avatar sx={{ ml: 2 }} src={user.avatar} alt={user.displayName} />
         ) : (
-          <Avatar sx={{ ml: 2}} ><AccountCircleIcon /></Avatar>
+          <Avatar sx={{ ml: 2 }}><AccountCircleIcon /></Avatar>
         )}
       </Button>
       <Menu open={isOpen} onClose={handleClose} anchorEl={anchorEl} keepMounted>
-        <MenuItem onClick={handleClose} component={NavLink} to='/tracks_history'>
+        <MenuItem onClick={handleClose} component={NavLink} to="/tracks_history">
           Show tracks history
         </MenuItem>
         <MenuItem>My account</MenuItem>
