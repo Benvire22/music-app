@@ -34,8 +34,8 @@ const UserMenu: React.FC<Props> = ({ user }) => {
       <Button onClick={handleClose} color='inherit' component={NavLink} to='/tracks/new'>
         new track
       </Button>
-      <Button color='inherit' sx={{ ml: 10 }} onClick={handleClick}>
-        {user.username}
+      <Button color='inherit' sx={{ ml: 10, textTransform: 'none' }} onClick={handleClick}>
+        {user.displayName ? user.displayName : user.username}
       </Button>
       <Menu open={isOpen} onClose={handleClose} anchorEl={anchorEl} keepMounted>
         <MenuItem onClick={handleClose} component={NavLink} to='/tracks_history'>

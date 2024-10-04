@@ -1,8 +1,11 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import User from '../models/User';
+import { OAuth2Client } from 'google-auth-library';
+import config from '../config';
 
 const usersRouter = express.Router();
+const googleClient = new OAuth2Client(config.google.clientID);
 
 usersRouter.post('/', async (req, res, next) => {
   try {
@@ -51,6 +54,47 @@ usersRouter.post('/sessions', async (req, res, next) => {
   }
 });
 
+usersRouter.post('/google', async (req, res, next) => {
+  try {
+    const ticket = await googleClient.verifyIdToken({
+      idToken: req.body.credential,
+      audience: config.google.clientID,
+    });
+
+    const payload = ticket.getPayload();
+
+    if (!payload) {
+      return res.status(400).send({ error: 'Google Login Error!' });
+    }
+
+    const email = payload.email;
+    const id = payload.sub;
+    const displayName = payload.name;
+
+    if (!email) {
+      return res.status(400).send({ error: 'Not enough user data to continue!' });
+    }
+
+    let user = await User.findOne({ googleID: id });
+
+    if (!user) {
+      user = new User({
+        username: email,
+        password: crypto.randomUUID(),
+        googleID: id,
+        displayName,
+      });
+    }
+
+    user.generateToken();
+    await user.save();
+
+    return res.send(user);
+  } catch (e) {
+    return next(e);
+  }
+});
+
 
 usersRouter.delete('/sessions', async (req, res, next) => {
   try {
@@ -62,7 +106,7 @@ usersRouter.delete('/sessions', async (req, res, next) => {
 
     if (!token) return res.status(204).send();
 
-    const user = await User.findOne({token});
+    const user = await User.findOne({ token });
 
     if (!user) return res.status(204).send();
 
